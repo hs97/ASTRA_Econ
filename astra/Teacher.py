@@ -6,7 +6,7 @@ Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
 import os
 import numpy as np
 import random
-from weaksource import SMSRules, TRECRules, YoutubeRules, CENSUSRules, MITRRules, SPOUSERules
+from weaksource import SMSRules, TRECRules, YoutubeRules, CENSUSRules, MITRRules, SPOUSERules, ECONRules
 from RuleAttentionNetwork import RAN
 
 supported_weak_sources = {
@@ -16,6 +16,7 @@ supported_weak_sources = {
     'censusrules': CENSUSRules,
     'mitrrules': MITRRules,
     'spouserules': SPOUSERules,
+    'econrules': ECONRules,
 }
 
 class Teacher:
@@ -31,7 +32,7 @@ class Teacher:
         if self.name != "ran":
             raise (BaseException("Teacher not supported: {}".format(self.name)))
         if args.weak_sources is None:
-            if args.dataset in ['sms', 'trec', 'youtube', 'census', 'mitr', 'spouse']:
+            if args.dataset in ['sms', 'trec', 'youtube', 'census', 'mitr', 'spouse', 'econ']:
                 args.weak_sources = ["{}rules".format(args.dataset)]
             else:
                 raise (BaseException("Teacher not available for dataset={}".format(args.dataset)))

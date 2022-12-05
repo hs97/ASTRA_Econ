@@ -47,6 +47,8 @@ class PreprocessedDataset:
                           'Dish': 6,
                           'Restaurant_Name': 7,
                           'Rating': 8}
+        elif self.dataset == 'econ':
+            return {0: 0, 1: 1}
         else:
             raise(BaseException('Pre-trained dataset not supported: {}'.format(self.dataset)))
 

@@ -62,6 +62,7 @@ class DefaultModelTrainer:
         self.logger.info("Class labels: {}".format(self.num_labels))
 
         x_train = np.array(self.preprocess(train_texts, preprocessed_train_texts))
+        print(x_train)
         y_train = np.array(train_labels)
         x_dev = np.array(self.preprocess(dev_texts, preprocessed_dev_texts))
         y_dev = np.array(dev_labels)
@@ -71,6 +72,8 @@ class DefaultModelTrainer:
 
         model_file = os.path.join(self.model_dir, "supervised_model.h5")
         distributed_res = self.distributed_train(x_train, y_train, x_dev, y_dev, model_file)
+        print('xxxxx')
+        print(x_train, y_train, x_dev, y_dev)
 
         self.model = distributed_res['model']
         if not os.path.exists(model_file):
@@ -180,8 +183,8 @@ class DefaultModelTrainer:
             with self.strategy.scope():
                 strong_model = construct_model(self.max_seq_length, self.num_labels, dataset=self.dataset)
                 strong_model.compile(optimizer=tf.keras.optimizers.Adam(),
-                                     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                                     metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name="acc")])
+                                     loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),
+                                     metrics=[tf.keras.metrics.CategoricalAccuracy(name="acc")])
             if os.path.exists(model_file):
                 strong_model.load_weights(model_file)
                 best_base_model = strong_model
@@ -192,6 +195,7 @@ class DefaultModelTrainer:
                 print(strong_model.summary())
 
             print("training supervised model {}/{}".format(counter, N_base))
+            print(x_dev)
             strong_model.fit(
                 x=[x_train, np.zeros((len(x_train), self.max_seq_length))],
                 y=y_train,
@@ -210,7 +214,7 @@ class DefaultModelTrainer:
             if val_loss[0] < best_validation_loss:
                 best_base_model = strong_model
                 best_validation_loss = val_loss[0]
-
+        print(strong_model)
         strong_model = best_base_model
         res = strong_model.evaluate([x_dev, np.zeros((len(x_dev), self.max_seq_length))], y_dev)
         print("Best validation loss for base model {}: {}".format(best_validation_loss, res))
@@ -286,6 +290,10 @@ def construct_model(max_seq_length, num_labels, dense_dropout=0.5, dataset='trec
     elif dataset == 'census':
         emb_size = 105
         hidden_size = 256
+        num_layers = 2
+    elif dataset == 'econ':
+        emb_size = 7
+        hidden_size = 64
         num_layers = 2
     elif dataset == 'mitr':
         emb_size = 1024

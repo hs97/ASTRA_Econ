@@ -1,0 +1,5 @@
+2022-11-17 17:27:04,422 INFO 
+
+		 *** NEW EXPERIMENT ***
+args=Namespace(adam_epsilon=1e-08, convert_abstain_to_random=False, datapath='../data', dataset='econ', debug=False, device=device(type='cuda'), downsample=1.0, eval_batch_size=16, experiment_folder='../experiments/econ', finetuning_rate=0.0001, fp16=False, hard_student_rule=False, learning_rate=0.0001, logdir='../experiments/econ/Nov17_17-26_ECON_experiments/seed0/2022_11_17-17_27_stBERT', logging_steps=500, loss_weights=False, lower_case=False, max_grad_norm=1.0, max_rule_seq_length=10, max_seq_length=64, max_size=1000, metric='weighted_acc', n_gpu=1, no_cuda=False, num_epochs=70, num_iter=25, num_labels=2, num_supervised_trials=5, num_unsup_epochs=25, oversample=3, overwrite=False, sample_size=16384, seed=0, soft_labels=False, student_name='bert', teacher_name='ran', tokenizer_method='clean', train_batch_size=16, unsup_batch_size=128, warmup_steps=0, weak_sources=None, weight_decay=0.0)
+2022-11-17 17:27:04,422 INFO building student: bert

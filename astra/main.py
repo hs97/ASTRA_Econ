@@ -57,9 +57,11 @@ def astra(args, logger):
     train_dataset = dh.load_dataset(method='train')
     train_dataset.oversample(args.oversample)  
     dev_dataset = dh.load_dataset(method='dev')
+
     test_dataset = dh.load_dataset(method='test')
     unlabeled_dataset = dh.load_dataset(method='unlabeled')
 
+    
     logger.info("creating pseudo-dataset")
     pseudodataset = dh.create_pseudodataset(unlabeled_dataset)
     pseudodataset.downsample(args.sample_size)
@@ -68,6 +70,8 @@ def astra(args, logger):
     newtraindataset = dh.create_pseudodataset(train_dataset)
     newtraindataset.balance('labels')
     newtraindataset.report_stats('labels')
+
+    
     results['student_train'] = student.train(
         train_dataset=newtraindataset,
         dev_dataset=dev_dataset,
@@ -76,7 +80,7 @@ def astra(args, logger):
     )
     train_res_list.append(results['student_train'])
     student.save('supervised_student')
-
+    
     logger.info("\n\n\t*** Evaluating on dev data ***")
     results['supervised_student_dev'] = evaluate(student, dev_dataset, ev, "student dev")
     dev_res_list.append(results['supervised_student_dev'])
@@ -210,6 +214,7 @@ def astra(args, logger):
     teacher.save("teacher_last")
     save_and_report_results(args, results, logger)
     return results
+    
 
 
 def main():
@@ -231,7 +236,7 @@ def main():
     parser.add_argument("--downsample", help="Downsample labeled train & dev datasets randomly stratisfied by label", type=float, default=1.0)
     parser.add_argument("--oversample", help="Oversample labeled train datasets", type=int, default=1)
     parser.add_argument("--tokenizer_method", help="Tokenizer method (for LogReg student)", type=str, default='clean')
-    parser.add_argument("--num_epochs", default=70, type=int, help="Total number of training epochs for student.")
+    parser.add_argument("--num_epochs", default=15, type=int, help="Total number of training epochs for student.")
     parser.add_argument("--num_unsup_epochs", default=25, type=int, help="Total number of training epochs for training student on unlabeled data")
     parser.add_argument("--debug", action="store_true", help="Activate debug mode")
     parser.add_argument("--soft_labels", action="store_true", help="Use soft labels for training Student")
@@ -293,6 +298,10 @@ def main():
         args.metric = 'f1'
         args.max_seq_length = 32
         args.train_batch_size = 256
+    elif args.dataset == 'econ':
+        args.num_labels = 2
+        args.metric = 'weighted_acc'
+        args.oversample = 3
     else:
         raise(BaseException('unknown dataset: {}'.format(args.dataset)))
 

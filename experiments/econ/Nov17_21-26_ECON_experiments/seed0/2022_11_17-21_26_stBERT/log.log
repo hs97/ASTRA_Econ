@@ -1,0 +1,53 @@
+2022-11-17 21:26:07,726 INFO 
+
+		 *** NEW EXPERIMENT ***
+args=Namespace(adam_epsilon=1e-08, convert_abstain_to_random=False, datapath='../data', dataset='econ', debug=False, device=device(type='cuda'), downsample=1.0, eval_batch_size=16, experiment_folder='../experiments/econ', finetuning_rate=0.0001, fp16=False, hard_student_rule=False, learning_rate=0.0001, logdir='../experiments/econ/Nov17_21-26_ECON_experiments/seed0/2022_11_17-21_26_stBERT', logging_steps=500, loss_weights=False, lower_case=False, max_grad_norm=1.0, max_rule_seq_length=10, max_seq_length=64, max_size=1000, metric='weighted_acc', n_gpu=1, no_cuda=False, num_epochs=15, num_iter=25, num_labels=2, num_supervised_trials=5, num_unsup_epochs=25, oversample=3, overwrite=False, sample_size=16384, seed=0, soft_labels=False, student_name='bert', teacher_name='ran', tokenizer_method='clean', train_batch_size=16, unsup_batch_size=128, warmup_steps=0, weak_sources=None, weight_decay=0.0)
+2022-11-17 21:26:07,726 INFO building student: bert
+2022-11-17 21:26:07,726 INFO building teacher
+2022-11-17 21:26:07,726 INFO No weak sources specified for Teacher. Using default: ['econrules']
+2022-11-17 21:26:07,727 INFO loading data
+2022-11-17 21:26:07,733 INFO Pre-processing train data for student...
+2022-11-17 21:26:07,752 INFO train DATASET: 247 examples
+2022-11-17 21:26:07,756 INFO train LABELS:
+1    182
+0     65
+Name: label, dtype: int64
+2022-11-17 21:26:07,756 INFO Oversampling train data 3 times
+2022-11-17 21:26:07,761 INFO train DATASET: 741 examples
+2022-11-17 21:26:07,763 INFO train LABELS:
+1    546
+0    195
+Name: label, dtype: int64
+2022-11-17 21:26:07,765 INFO Pre-processing dev data for student...
+2022-11-17 21:26:07,767 INFO dev DATASET: 18 examples
+2022-11-17 21:26:07,769 INFO dev LABELS:
+1    11
+0     7
+Name: label, dtype: int64
+2022-11-17 21:26:07,771 INFO Pre-processing test data for student...
+2022-11-17 21:26:07,774 INFO test DATASET: 32 examples
+2022-11-17 21:26:07,776 INFO test LABELS:
+1    18
+0    14
+Name: label, dtype: int64
+2022-11-17 21:26:07,780 INFO Pre-processing unlabeled data for student...
+2022-11-17 21:26:07,783 INFO unlabeled DATASET: 444 examples
+2022-11-17 21:26:07,785 INFO unlabeled LABELS:
+Series([], Name: label, dtype: int64)
+2022-11-17 21:26:07,785 INFO creating pseudo-dataset
+2022-11-17 21:26:07,786 INFO copying data from unlabeled dataset
+2022-11-17 21:26:07,796 INFO done
+2022-11-17 21:26:07,796 INFO [WARNING] sample size = 16384 > 444
+2022-11-17 21:26:07,796 INFO Downsampling 444 data
+2022-11-17 21:26:07,799 INFO copying data from train dataset
+2022-11-17 21:26:07,815 INFO done
+2022-11-17 21:26:07,816 INFO Balancing Pseudo Dataset to keep 1092 items...
+2022-11-17 21:26:07,821 INFO PSEUDO-DATASET:
+1092 examples
+PSEUDO-LABELS:
+1    546
+0    546
+Name: label, dtype: int64
+2022-11-17 21:26:07,821 INFO Class labels: 2
+2022-11-17 21:26:07,822 INFO X Train Shape (1092, 7) (1092,)
+2022-11-17 21:26:07,823 INFO X Dev Shape (18, 7) (18,)

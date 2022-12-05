@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 from copy import deepcopy
 from sklearn.utils import shuffle
 
-preprocessed_dataset_list = ['trec', 'youtube', 'sms', 'census', 'mitr', 'spouse']
+preprocessed_dataset_list = ['trec', 'youtube', 'sms', 'census', 'mitr', 'spouse', 'econ']
 
 def get_dataset_obj(dataset):
     if dataset in preprocessed_dataset_list:

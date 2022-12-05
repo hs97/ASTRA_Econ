@@ -101,3 +101,17 @@ class SPOUSERules:
     def apply(self, dataset):
         preds = dataset.data['weak_labels']
         return preds
+
+
+class ECONRules:
+    # Weak Source Class
+    # has to implement apply function that applied to a dataset
+    # predict() function that applies to a single text.
+    def __init__(self, datapath="../data"):
+        self.num_labels = 2
+        self.num_rules = 7
+        self.preprocess = None
+
+    def apply(self, dataset):
+        preds = dataset.data['weak_labels']
+        return preds
