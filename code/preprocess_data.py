@@ -14,7 +14,7 @@ def predict_reg(x, cutoff_date, yname, xnames):
     res = mod.fit()
     return res.predict(x[xnames])
 
-def split_df(df, continuous=False):
+def split_df(df, continuous=False, ffill=False):
     '''
     This function first splits the dataframes into labels, features, and rule predictions
     It then splits the labelled data and the unlabelled data, as well as the rule predictions
@@ -22,12 +22,18 @@ def split_df(df, continuous=False):
     # Split dataset into labels, rule predictions, and features
     labels = df['GDP']
     x = df.loc[:, ~(df.columns.str.startswith('y_'))].drop(columns=['GDP'])
+    if ffill:
+        x = x.fillna(method='ffill')
+    x = x.fillna(0)
     rule_preds = df.loc[:, df.columns.str.startswith('y_')]
     # Further split into labeled and unlabeled. 
     unlabeled_ind = labels.isna()
+    # Fill the abstaining votes as -999
+    labels[labels.isna()] = -999
+    rule_preds[rule_preds.isna()] = -999
     unlabeled_labels = labels[unlabeled_ind]
-    unlabeled_x = x[unlabeled_ind].fillna(0)
-    unlabeled_rule_preds = rule_preds[unlabeled_ind] 
+    unlabeled_x = x[unlabeled_ind]
+    unlabeled_rule_preds = rule_preds[unlabeled_ind]
     labeled_labels = labels[~unlabeled_ind]
     labeled_x = x[~unlabeled_ind]
     labeled_rule_preds = rule_preds[~unlabeled_ind]
@@ -45,6 +51,8 @@ def to_classes(x, thres=2):
 
 
 if __name__ == "__main__":
+    reg = True
+    ffill = True
     fred = Fred(api_key='30adf5295a539a48e57fe367896a60e9')
     GDP = fred.get_series('GDPC1', units='pc1', frequency='q')
     u = fred.get_series('UNRATE', units='ch1', frequency='m')
@@ -63,7 +71,7 @@ if __name__ == "__main__":
     train_cutoff = '2010-01-01'
     dev_cutoff = '2018-01-01'
     lagged_vars = []
-    for i in range(1, 3):
+    for i in range(1, 5):
         lagged_vars += [f'GDP_{i}'] 
         df[f'y_AR{i}'] = predict_reg(df, train_cutoff, 'GDP', lagged_vars)
     df[f'y_inf'] = predict_reg(df, train_cutoff, 'GDP', ['cpi'])
@@ -71,39 +79,35 @@ if __name__ == "__main__":
     df_test = df[(df.index >= train_cutoff) & (df.index < dev_cutoff)]
     df_dev = df[(df.index > dev_cutoff)]
 
-    unlabeled_x, unlabeled_labels, unlabeled_rule_preds, train_x, train_labels, train_rule_preds = split_df(df_train)
-    _, _, _, test_x, test_labels, test_rule_preds = split_df(df_test)
-    _, _, _, dev_x, dev_labels, dev_rule_preds = split_df(df_dev)
-    unlabeled_x.fillna(0, inplace=True)
-    train_x.fillna(0, inplace=True)
-    test_x.fillna(0, inplace=True)
-    dev_x.fillna(0, inplace=True)
+    unlabeled_x, unlabeled_labels, unlabeled_rule_preds, train_x, train_labels, train_rule_preds = split_df(df_train, continuous=reg, ffill=ffill)
+    _, _, _, test_x, test_labels, test_rule_preds = split_df(df_test, continuous=reg, ffill=ffill)
+    _, _, _, dev_x, dev_labels, dev_rule_preds = split_df(df_dev, reg, ffill=ffill)
 
-
+    if reg:
+        ext = '_reg'
+    else:
+        ext = ''
     print("unlabeled")
-    joblib.dump(np.array(unlabeled_x), 'data/ECON/seed0/unlabeled_x.pkl')
-    joblib.dump(np.array(unlabeled_labels), 'data/ECON/seed0/unlabeled_labels.pkl')
-    joblib.dump(np.array(unlabeled_rule_preds), 'data/ECON/seed0/unlabeled_rule_preds.pkl')
+    joblib.dump(np.array(unlabeled_x), f'data/ECON{ext}/seed0/unlabeled_x.pkl')
+    joblib.dump(np.array(unlabeled_labels), f'data/ECON{ext}/seed0/unlabeled_labels.pkl')
+    joblib.dump(np.array(unlabeled_rule_preds), f'data/ECON{ext}/seed0/unlabeled_rule_preds.pkl')
 
     print("\ntrain")
-    joblib.dump(np.array(train_x), 'data/ECON/seed0/train_x.pkl')
-    joblib.dump(np.array(train_labels), 'data/ECON/seed0/train_labels.pkl')
-    joblib.dump(np.array(train_rule_preds), 'data/ECON/seed0/train_rule_preds.pkl')
-    joblib.dump(np.zeros_like(train_rule_preds), 'data/ECON/seed0/train_exemplars.pkl')
+    joblib.dump(np.array(train_x), f'data/ECON{ext}/seed0/train_x.pkl')
+    joblib.dump(np.array(train_labels), f'data/ECON{ext}/seed0/train_labels.pkl')
+    joblib.dump(np.array(train_rule_preds), f'data/ECON{ext}/seed0/train_rule_preds.pkl')
+    joblib.dump(np.zeros_like(train_rule_preds), f'data/ECON{ext}/seed0/train_exemplars.pkl')
 
     print("\ntest")
-    joblib.dump(np.array(test_x), 'data/ECON/seed0/test_x.pkl')
-    joblib.dump(np.array(test_labels), 'data/ECON/seed0/test_labels.pkl')
-    joblib.dump(np.array(test_rule_preds), 'data/ECON/seed0/test_rule_preds.pkl')
+    joblib.dump(np.array(test_x), f'data/ECON{ext}/seed0/test_x.pkl')
+    joblib.dump(np.array(test_labels), f'data/ECON{ext}/seed0/test_labels.pkl')
+    joblib.dump(np.array(test_rule_preds), f'data/ECON{ext}/seed0/test_rule_preds.pkl')
 
     print("\ndev")
-    joblib.dump(np.array(dev_x), 'data/ECON/seed0/dev_x.pkl')
-    joblib.dump(np.array(dev_labels), 'data/ECON/seed0/dev_labels.pkl')
-    joblib.dump(np.array(dev_rule_preds), 'data/ECON/seed0/dev_rule_preds.pkl')
+    joblib.dump(np.array(dev_x), f'data/ECON{ext}/seed0/dev_x.pkl')
+    joblib.dump(np.array(dev_labels), f'data/ECON{ext}/seed0/dev_labels.pkl')
+    joblib.dump(np.array(dev_rule_preds), f'data/ECON{ext}/seed0/dev_rule_preds.pkl')
 
     print(dev_labels)
-    print(test_rule_preds)
+    print(unlabeled_rule_preds)
     print(test_labels)
-    for column in test_rule_preds.columns:
-        print(column)
-        print((test_rule_preds[column] == test_labels).mean())

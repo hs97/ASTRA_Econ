@@ -94,7 +94,6 @@ class RAN:
             else:
                 student_rule_id = np.zeros((N, 1))
             fired_rule_ids = np.concatenate([student_rule_id, fired_rule_ids], axis=1)
-
         return rule_mask, fired_rule_ids, one_hot_rule_pred
 
     def train(self, x_train, rule_pred_train, y_train, x_dev=None, rule_pred_dev=None, y_dev=None,

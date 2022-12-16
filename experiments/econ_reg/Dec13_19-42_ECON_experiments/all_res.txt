@@ -1,0 +1,2 @@
+Best Student: 1.60 (iter=1)
+Best Teacher: 2.54 (iter=1)

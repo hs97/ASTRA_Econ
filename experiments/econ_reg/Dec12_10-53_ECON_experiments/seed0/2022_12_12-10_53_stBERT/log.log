@@ -1,0 +1,47 @@
+2022-12-12 10:53:36,636 INFO 
+
+		 *** NEW EXPERIMENT ***
+args=Namespace(adam_epsilon=1e-08, convert_abstain_to_random=False, datapath='../data', dataset='econ_reg', debug=False, device=device(type='cuda'), downsample=1.0, eval_batch_size=16, experiment_folder='../experiments/econ_reg', finetuning_rate=0.0001, fp16=False, hard_student_rule=False, learning_rate=0.0001, logdir='../experiments/econ_reg/Dec12_10-53_ECON_experiments/seed0/2022_12_12-10_53_stBERT', logging_steps=500, loss_weights=False, lower_case=False, max_grad_norm=1.0, max_rule_seq_length=10, max_seq_length=64, max_size=1000, metric='mse', n_gpu=1, no_cuda=False, num_epochs=15, num_iter=25, num_labels=1, num_supervised_trials=5, num_unsup_epochs=25, oversample=1, overwrite=False, sample_size=16384, seed=0, soft_labels=False, student_name='bert', teacher_name='ran', tokenizer_method='clean', train_batch_size=16, unsup_batch_size=128, warmup_steps=0, weak_sources=None, weight_decay=0.0)
+2022-12-12 10:53:36,636 INFO building student: bert
+2022-12-12 10:53:36,636 INFO building teacher
+2022-12-12 10:53:36,636 INFO No weak sources specified for Teacher. Using default: ['econ_regrules']
+2022-12-12 10:53:36,637 INFO loading data
+2022-12-12 10:53:36,638 INFO Pre-processing train data for student...
+2022-12-12 10:53:36,638 INFO train DATASET: 247 examples
+2022-12-12 10:53:36,638 INFO train LABELS:
+0.7368421052631579
+2022-12-12 10:53:36,638 INFO Oversampling train data 1 times
+2022-12-12 10:53:36,638 INFO train DATASET: 247 examples
+2022-12-12 10:53:36,638 INFO train LABELS:
+0.7368421052631579
+2022-12-12 10:53:36,639 INFO Pre-processing dev data for student...
+2022-12-12 10:53:36,639 INFO dev DATASET: 18 examples
+2022-12-12 10:53:36,639 INFO dev LABELS:
+2.138967777777778
+2022-12-12 10:53:36,640 INFO Pre-processing test data for student...
+2022-12-12 10:53:36,641 INFO test DATASET: 32 examples
+2022-12-12 10:53:36,641 INFO test LABELS:
+2.1615075
+2022-12-12 10:53:36,642 INFO Pre-processing unlabeled data for student...
+2022-12-12 10:53:36,642 INFO unlabeled DATASET: 444 examples
+2022-12-12 10:53:36,642 INFO unlabeled LABELS:
+-1.0
+2022-12-12 10:53:36,642 INFO creating pseudo-dataset
+2022-12-12 10:53:36,642 INFO copying data from unlabeled dataset
+2022-12-12 10:53:36,651 INFO done
+2022-12-12 10:53:36,651 INFO copying data from train dataset
+2022-12-12 10:53:36,657 INFO done
+2022-12-12 10:53:36,660 INFO PSEUDO-DATASET:
+247 examples
+ with mean PSEUDO-LABELS:
+0.7368421052631579
+2022-12-12 10:53:36,660 INFO Class labels: 1
+2022-12-12 10:53:36,661 INFO X Train Shape (247, 7) (247,)
+2022-12-12 10:53:36,661 INFO X Dev Shape (18, 7) (18,)
+2022-12-12 10:53:44,469 INFO Saving supervised_student to ../experiments/econ_reg/Dec12_10-53_ECON_experiments/seed0/2022_12_12-10_53_stBERT/supervised_student
+2022-12-12 10:53:44,470 INFO Saving model at ../experiments/econ_reg/Dec12_10-53_ECON_experiments/seed0/2022_12_12-10_53_stBERT/supervised_student/final_model.h5
+2022-12-12 10:53:44,481 INFO 
+
+	*** Evaluating on dev data ***
+2022-12-12 10:53:44,481 INFO Predicting labels for 18 texts
+2022-12-12 10:53:44,609 INFO Evaluating student dev on 18 examples

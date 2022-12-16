@@ -1,0 +1,20 @@
+2022-12-12 10:55:59,943 INFO 
+
+		 *** NEW EXPERIMENT ***
+args=Namespace(adam_epsilon=1e-08, convert_abstain_to_random=False, datapath='../data', dataset='econ_reg', debug=False, device=device(type='cuda'), downsample=1.0, eval_batch_size=16, experiment_folder='../experiments/econ_reg', finetuning_rate=0.0001, fp16=False, hard_student_rule=False, learning_rate=0.0001, logdir='../experiments/econ_reg/Dec12_10-55_ECON_experiments/seed0/2022_12_12-10_55_stBERT', logging_steps=500, loss_weights=False, lower_case=False, max_grad_norm=1.0, max_rule_seq_length=10, max_seq_length=64, max_size=1000, metric='mse', n_gpu=1, no_cuda=False, num_epochs=15, num_iter=25, num_labels=1, num_supervised_trials=5, num_unsup_epochs=25, oversample=1, overwrite=False, sample_size=16384, seed=0, soft_labels=False, student_name='bert', teacher_name='ran', tokenizer_method='clean', train_batch_size=16, unsup_batch_size=128, warmup_steps=0, weak_sources=None, weight_decay=0.0)
+2022-12-12 10:55:59,943 INFO building student: bert
+2022-12-12 10:55:59,943 INFO building teacher
+2022-12-12 10:55:59,943 INFO No weak sources specified for Teacher. Using default: ['econ_regrules']
+2022-12-12 10:55:59,943 INFO loading data
+2022-12-12 10:55:59,945 INFO Pre-processing train data for student...
+2022-12-12 10:55:59,945 INFO train DATASET: 247 examples
+2022-12-12 10:55:59,945 INFO train LABELS:
+0.7368421052631579
+2022-12-12 10:55:59,945 INFO Oversampling train data 1 times
+2022-12-12 10:55:59,945 INFO train DATASET: 247 examples
+2022-12-12 10:55:59,945 INFO train LABELS:
+0.7368421052631579
+2022-12-12 10:55:59,946 INFO Pre-processing dev data for student...
+2022-12-12 10:55:59,947 INFO dev DATASET: 18 examples
+2022-12-12 10:55:59,947 INFO dev LABELS:
+2.138967777777778

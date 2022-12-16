@@ -1,0 +1,10 @@
+Dataset: econ_reg
+Weak Sources: ['econ_regrules']
+Model: bert
+
+Teacher Train mse: 2.0
+Teacher Dev mse: 54.1
+Teacher Test mse: 2.5
+
+Student Dev mse: 12.7
+Student Test mse: 1.6
