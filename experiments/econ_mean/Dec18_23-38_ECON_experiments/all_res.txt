@@ -1,0 +1,7 @@
+Best Student: 71.88 (iter=0)
+Best Teacher: 81.25 (iter=0)
+
+
+Average results across splits
+Best Student: 71.88 (std=0.00, iter=0)
+Best Teacher: 81.25 (std=0.00, iter=0)

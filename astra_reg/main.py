@@ -1,6 +1,7 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
 
 import argparse
@@ -252,7 +253,7 @@ def main():
     np.random.seed(args.seed)
     
     # Define dataset-specific parameters
-    if args.dataset == 'econ_reg':
+    if args.dataset in ['econ_reg', 'econ_reg_ffill', 'econ_reg_EU']:
         args.num_labels = 1
         args.metric = 'mse'
         args.oversample = 1

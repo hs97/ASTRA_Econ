@@ -1,6 +1,7 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
 
 import numpy as np
@@ -46,7 +47,6 @@ class Evaluator:
 
         pred = list(preds)
         true = list(labels)
-        
         mse = mean_squared_error(true, pred)
         r2 = r2_score(true, pred)
         var_explained = explained_variance_score(true, pred)

@@ -25,7 +25,6 @@ class PreprocessedDataset:
         self.orig_train = orig_train
         self.label2ind = self.get_label2ind()
         self.num_labels = len(self.label2ind)
-        # self.lf_names = ["rule_{}".format(i+1) for i in range(15)]
         self.lf_names = None
 
     def get_label2ind(self):
@@ -39,15 +38,15 @@ class PreprocessedDataset:
             return {"low": 0, "high": 1}
         elif self.dataset == 'mitr':
             return {'O': 0,
-                          'Location': 1,
-                          'Hours': 2,
-                          'Amenity': 3,
-                          'Price': 4,
-                          'Cuisine': 5,
-                          'Dish': 6,
-                          'Restaurant_Name': 7,
-                          'Rating': 8}
-        elif self.dataset == 'econ':
+                    'Location': 1,
+                    'Hours': 2,
+                    'Amenity': 3,
+                    'Price': 4,
+                    'Cuisine': 5,
+                    'Dish': 6,
+                    'Restaurant_Name': 7,
+                    'Rating': 8}
+        elif self.dataset in  ['econ', 'econ_0', 'econ_mean']:
             return {0: 0, 1: 1}
         else:
             raise(BaseException('Pre-trained dataset not supported: {}'.format(self.dataset)))

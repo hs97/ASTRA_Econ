@@ -17,6 +17,7 @@ supported_weak_sources = {
     'mitrrules': MITRRules,
     'spouserules': SPOUSERules,
     'econrules': ECONRules,
+    'econ_0rules': ECONRules, 'econ_meanrules': ECONRules,
 }
 
 class Teacher:
@@ -32,7 +33,7 @@ class Teacher:
         if self.name != "ran":
             raise (BaseException("Teacher not supported: {}".format(self.name)))
         if args.weak_sources is None:
-            if args.dataset in ['sms', 'trec', 'youtube', 'census', 'mitr', 'spouse', 'econ']:
+            if args.dataset in ['sms', 'trec', 'youtube', 'census', 'mitr', 'spouse', 'econ', 'econ_0', 'econ_mean']:
                 args.weak_sources = ["{}rules".format(args.dataset)]
             else:
                 raise (BaseException("Teacher not available for dataset={}".format(args.dataset)))

@@ -1,0 +1,10 @@
+Dataset: econ_reg_ffill
+Weak Sources: ['econ_reg_ffillrules']
+Model: bert
+
+Teacher Train mse: 2.0
+Teacher Dev mse: 25.7
+Teacher Test mse: 2.0
+
+Student Dev mse: 12.7
+Student Test mse: 1.3

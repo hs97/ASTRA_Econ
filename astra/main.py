@@ -123,7 +123,7 @@ def astra(args, logger):
         teacher_dev_res_list.append(teacher_dev_res)
 
         teacher_test_res, t_test_dict = evaluate_ran(teacher, test_dataset, ev, "teacher test iter{}".format(iter))
-        # analyze_rule_attention_scores(t_test_dict, logger, args.logdir, name='test_iter{}'.format(iter))
+        analyze_rule_attention_scores(t_test_dict, logger, args.logdir, name='test_iter{}'.format(iter))
         teacher_test_res_list.append(teacher_test_res)
 
         # Update unlabeled data with Teacher's predictions
@@ -214,8 +214,6 @@ def astra(args, logger):
     teacher.save("teacher_last")
     save_and_report_results(args, results, logger)
     return results
-    
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -298,7 +296,7 @@ def main():
         args.metric = 'f1'
         args.max_seq_length = 32
         args.train_batch_size = 256
-    elif args.dataset == 'econ':
+    elif args.dataset in ['econ_0', 'econ_mean', 'econ']:
         args.num_labels = 2
         args.metric = 'weighted_acc'
         args.oversample = 3

@@ -20,6 +20,7 @@ class PreprocessedDataset:
         self.dataset = dataset
         self.seed = seed
         self.basedatafolder = os.path.join(datapath, self.dataset.upper())
+        print(self.basedatafolder)
         self.datafolder = os.path.join(self.basedatafolder, 'seed{}/'.format(seed))
         self.language = 'english'
         self.orig_train = orig_train

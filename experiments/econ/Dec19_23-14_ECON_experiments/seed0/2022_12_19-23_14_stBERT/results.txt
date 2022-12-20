@@ -1,0 +1,10 @@
+Dataset: econ
+Weak Sources: ['econrules']
+Model: bert
+
+Teacher Train weighted_acc: 90.7
+Teacher Dev weighted_acc: 78.1
+Teacher Test weighted_acc: 84.2
+
+Student Dev weighted_acc: 59.4
+Student Test weighted_acc: 84.2

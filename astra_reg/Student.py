@@ -1,12 +1,12 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
-
 import os
 from model import LogRegTrainer, BertTrainer, DefaultModelTrainer
 
-preprocessed_dataset_list = ['econ_reg']
+preprocessed_dataset_list = ['econ_reg', 'econ_reg_ffill', 'econ_reg_EU']
 supported_trainers = {
     'logreg': LogRegTrainer,
     'bert': BertTrainer,

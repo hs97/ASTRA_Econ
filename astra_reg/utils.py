@@ -1,8 +1,8 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
-
 import json
 import os
 import glob
@@ -226,7 +226,7 @@ def summarize_results(basefolder, dataset):
         plt.legend(loc='lower right')
         plt.xlabel('iter')
         plt.ylabel(metric)
-        plt.show()
+        plt.savefig(os.path.join(basefolder, 'res.pdf'))
         
         print('avg_student_perf["{}"] = [{}]'.format(dataset, ', '.join(['{:.2f}'.format(x) for x in avg_student_perf])))
         print('std_student_perf["{}"] = [{}]'.format(dataset, ', '.join(['{:.2f}'.format(x) for x in std_student_perf])))

@@ -1,6 +1,7 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
 
 import os
@@ -13,7 +14,7 @@ from sklearn.model_selection import train_test_split
 from copy import deepcopy
 from sklearn.utils import shuffle
 
-preprocessed_dataset_list = ['trec', 'youtube', 'sms', 'census', 'mitr', 'spouse', 'econ', 'econ_reg']
+preprocessed_dataset_list = ['trec', 'youtube', 'sms', 'census', 'mitr', 'spouse', 'econ', 'econ_reg', 'econ_reg_ffill', 'econ_reg_EU']
 
 def get_dataset_obj(dataset):
     if dataset in preprocessed_dataset_list:

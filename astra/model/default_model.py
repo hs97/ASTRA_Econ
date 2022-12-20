@@ -291,10 +291,10 @@ def construct_model(max_seq_length, num_labels, dense_dropout=0.5, dataset='trec
         emb_size = 105
         hidden_size = 256
         num_layers = 2
-    elif dataset == 'econ':
+    elif dataset in ['econ', 'econ_0', 'econ_mean']:
         emb_size = 7
         hidden_size = 64
-        num_layers = 2
+        num_layers = 3
     elif dataset == 'mitr':
         emb_size = 1024
         hidden_size = 512

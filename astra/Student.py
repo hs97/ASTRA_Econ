@@ -6,7 +6,7 @@ Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
 import os
 from model import LogRegTrainer, BertTrainer, DefaultModelTrainer
 
-preprocessed_dataset_list = ['trec', 'youtube', 'sms', 'census', 'mitr', 'econ']
+preprocessed_dataset_list = ['econ', 'econ_0', 'econ_mean']
 supported_trainers = {
     'logreg': LogRegTrainer,
     'bert': BertTrainer,

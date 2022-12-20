@@ -1,8 +1,8 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
-
 import os
 import numpy as np
 import random
@@ -26,7 +26,7 @@ class Teacher:
         if self.name != "ran":
             raise (BaseException("Teacher not supported: {}".format(self.name)))
         if args.weak_sources is None:
-            if args.dataset in ['sms', 'trec', 'youtube', 'census', 'mitr', 'spouse', 'econ', 'econ_reg']:
+            if args.dataset.startswith('econ'):
                 args.weak_sources = ["{}rules".format(args.dataset)]
             else:
                 raise (BaseException("Teacher not available for dataset={}".format(args.dataset)))
@@ -39,9 +39,7 @@ class Teacher:
         self.num_labels = self.args.num_labels
         np.random.seed(self.seed)
         self.source_names = args.weak_sources
-        for source_name in self.source_names:
-            assert source_name in supported_weak_sources, "Weak Source not supported: {}".format(source_name)
-        self.weak_sources = {src: supported_weak_sources[src](self.datapath) for src in self.source_names}
+        self.weak_sources = {src: ECONRules(self.datapath) for src in self.source_names}
         self.num_rules = np.sum([src.num_rules for _, src in self.weak_sources.items()])
         self.preprocess_fns = [src.preprocess for src_name, src in self.weak_sources.items()]
         self.preprocess = None if None in self.preprocess_fns else self.preprocess_all
@@ -105,7 +103,6 @@ class Teacher:
                                      student_pred=student_pred_proba,
                                      train=False)
         if dataset.method in ['test', 'dev'] and self.convert_abstain_to_random:
-            # TODO: change this to picking the mean numerical value
             labels = [x if x != -999 else np.mean(x[x!=-999]) for x in res['preds'].tolist()]
             res['preds'] = np.array(labels)
         return res
@@ -122,7 +119,7 @@ class Teacher:
             rule_pred_unsup = self.apply(unsup_dataset)
         else:
             rule_pred_unsup = None
-        assert ((rule_pred_train != -1).sum(axis=1) == 0).sum() == 0, "cannot train RAN in examples where no rules apply. need to drop these examples first"
+        assert ((rule_pred_train != -999).sum(axis=1) == 0).sum() == 0, "cannot train RAN in examples where no rules apply. need to drop these examples first"
         self.logger.info("Training Rule Attention Network")
         self.agg_model.train(
             x_train=train_student_features,

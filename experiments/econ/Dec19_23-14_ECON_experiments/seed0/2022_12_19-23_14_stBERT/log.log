@@ -1,0 +1,3114 @@
+2022-12-19 23:14:59,247 INFO 
+
+		 *** NEW EXPERIMENT ***
+args=Namespace(adam_epsilon=1e-08, convert_abstain_to_random=False, datapath='../data', dataset='econ', debug=False, device=device(type='cuda'), downsample=1.0, eval_batch_size=16, experiment_folder='../experiments/econ', finetuning_rate=0.0001, fp16=False, hard_student_rule=False, learning_rate=0.0001, logdir='../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT', logging_steps=500, loss_weights=False, lower_case=False, max_grad_norm=1.0, max_rule_seq_length=10, max_seq_length=64, max_size=1000, metric='weighted_acc', n_gpu=1, no_cuda=False, num_epochs=15, num_iter=25, num_labels=2, num_supervised_trials=5, num_unsup_epochs=25, oversample=3, overwrite=False, sample_size=16384, seed=0, soft_labels=False, student_name='bert', teacher_name='ran', tokenizer_method='clean', train_batch_size=16, unsup_batch_size=128, warmup_steps=0, weak_sources=None, weight_decay=0.0)
+2022-12-19 23:14:59,248 INFO building student: bert
+2022-12-19 23:14:59,248 INFO building teacher
+2022-12-19 23:14:59,248 INFO No weak sources specified for Teacher. Using default: ['econrules']
+2022-12-19 23:14:59,248 INFO loading data
+2022-12-19 23:14:59,257 INFO Pre-processing train data for student...
+2022-12-19 23:14:59,261 INFO train DATASET: 247 examples
+2022-12-19 23:14:59,265 INFO train LABELS:
+1    182
+0     65
+Name: label, dtype: int64
+2022-12-19 23:14:59,265 INFO Oversampling train data 3 times
+2022-12-19 23:14:59,268 INFO train DATASET: 741 examples
+2022-12-19 23:14:59,269 INFO train LABELS:
+1    546
+0    195
+Name: label, dtype: int64
+2022-12-19 23:14:59,271 INFO Pre-processing dev data for student...
+2022-12-19 23:14:59,274 INFO dev DATASET: 32 examples
+2022-12-19 23:14:59,275 INFO dev LABELS:
+1    18
+0    14
+Name: label, dtype: int64
+2022-12-19 23:14:59,278 INFO Pre-processing test data for student...
+2022-12-19 23:14:59,280 INFO test DATASET: 19 examples
+2022-12-19 23:14:59,281 INFO test LABELS:
+1    12
+0     7
+Name: label, dtype: int64
+2022-12-19 23:14:59,284 INFO Pre-processing unlabeled data for student...
+2022-12-19 23:14:59,286 INFO unlabeled DATASET: 444 examples
+2022-12-19 23:14:59,287 INFO unlabeled LABELS:
+Series([], Name: label, dtype: int64)
+2022-12-19 23:14:59,287 INFO creating pseudo-dataset
+2022-12-19 23:14:59,287 INFO copying data from unlabeled dataset
+2022-12-19 23:14:59,296 INFO done
+2022-12-19 23:14:59,296 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:14:59,296 INFO Downsampling 444 data
+2022-12-19 23:14:59,300 INFO copying data from train dataset
+2022-12-19 23:14:59,309 INFO done
+2022-12-19 23:14:59,310 INFO Balancing Pseudo Dataset to keep 1092 items...
+2022-12-19 23:14:59,315 INFO PSEUDO-DATASET:
+1092 examples
+PSEUDO-LABELS:
+1    546
+0    546
+Name: label, dtype: int64
+2022-12-19 23:14:59,315 INFO Class labels: 2
+2022-12-19 23:14:59,316 INFO X Train Shape (1092, 7) (1092,)
+2022-12-19 23:14:59,317 INFO X Dev Shape (32, 7) (32,)
+2022-12-19 23:15:10,633 INFO Saving supervised_student to ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/supervised_student
+2022-12-19 23:15:10,633 INFO Saving model at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/supervised_student/final_model.h5
+2022-12-19 23:15:10,641 INFO 
+
+	*** Evaluating on dev data ***
+2022-12-19 23:15:10,642 INFO Predicting labels for 32 texts
+2022-12-19 23:15:10,752 INFO Evaluating student dev on 32 examples
+2022-12-19 23:15:10,761 INFO student dev performance: 34.38
+2022-12-19 23:15:10,761 INFO student dev confusion matrix:
+[[ 1 13]
+ [ 8 10]]
+2022-12-19 23:15:10,761 INFO student dev report:
+              precision    recall  f1-score   support
+
+           0       0.11      0.07      0.09        14
+           1       0.43      0.56      0.49        18
+
+    accuracy                           0.34        32
+   macro avg       0.27      0.31      0.29        32
+weighted avg       0.29      0.34      0.31        32
+
+2022-12-19 23:15:10,761 INFO 
+
+	*** Evaluating on test data ***
+2022-12-19 23:15:10,761 INFO Predicting labels for 19 texts
+2022-12-19 23:15:10,865 INFO Evaluating student test on 19 examples
+2022-12-19 23:15:10,869 INFO student test performance: 31.58
+2022-12-19 23:15:10,869 INFO student test confusion matrix:
+[[3 4]
+ [9 3]]
+2022-12-19 23:15:10,869 INFO student test report:
+              precision    recall  f1-score   support
+
+           0       0.25      0.43      0.32         7
+           1       0.43      0.25      0.32        12
+
+    accuracy                           0.32        19
+   macro avg       0.34      0.34      0.32        19
+weighted avg       0.36      0.32      0.32        19
+
+2022-12-19 23:15:10,869 INFO initializing teacher on unlabeled data with majority voting
+2022-12-19 23:15:10,869 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:10,870 INFO There are 3/7 active rules
+2022-12-19 23:15:10,871 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:15:10,881 INFO evaluating majority voting
+2022-12-19 23:15:10,881 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:15:10,882 INFO There are 7/7 active rules
+2022-12-19 23:15:10,883 INFO Coverage: 100.0% (741/741)
+2022-12-19 23:15:10,904 INFO Evaluating teacher train on 741 examples
+2022-12-19 23:15:10,912 INFO teacher train performance: 90.69
+2022-12-19 23:15:10,912 INFO teacher train confusion matrix:
+[[150  45]
+ [ 24 522]]
+2022-12-19 23:15:10,913 INFO teacher train report:
+              precision    recall  f1-score   support
+
+           0       0.86      0.77      0.81       195
+           1       0.92      0.96      0.94       546
+
+    accuracy                           0.91       741
+   macro avg       0.89      0.86      0.88       741
+weighted avg       0.91      0.91      0.91       741
+
+2022-12-19 23:15:10,913 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:10,913 INFO There are 7/7 active rules
+2022-12-19 23:15:10,913 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:15:10,914 INFO Evaluating teacher dev on 32 examples
+2022-12-19 23:15:10,919 INFO teacher dev performance: 78.12
+2022-12-19 23:15:10,919 INFO teacher dev confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:15:10,919 INFO teacher dev report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:15:10,919 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:15:10,919 INFO There are 7/7 active rules
+2022-12-19 23:15:10,920 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:15:10,920 INFO Evaluating teacher test on 19 examples
+2022-12-19 23:15:10,924 INFO teacher test performance: 89.47
+2022-12-19 23:15:10,924 INFO teacher test confusion matrix:
+[[ 5  2]
+ [ 0 12]]
+2022-12-19 23:15:10,925 INFO teacher test report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.71      0.83         7
+           1       0.86      1.00      0.92        12
+
+    accuracy                           0.89        19
+   macro avg       0.93      0.86      0.88        19
+weighted avg       0.91      0.89      0.89        19
+
+2022-12-19 23:15:10,925 INFO 
+
+	 *** Starting loop 0 ***
+2022-12-19 23:15:10,925 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:15:10,925 INFO Downsampling 444 data
+2022-12-19 23:15:10,925 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:15:10,925 INFO Getting rule predictions
+2022-12-19 23:15:10,925 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:15:10,926 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:10,926 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:10,927 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:15:10,928 INFO Predicting labels for 741 texts
+2022-12-19 23:15:11,031 INFO Predicting labels for 32 texts
+2022-12-19 23:15:11,145 INFO Predicting labels for 444 texts
+2022-12-19 23:15:11,255 INFO Training Rule Attention Network
+2022-12-19 23:15:11,266 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:15:11,266 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:15:11,270 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:15:11,349 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:15:14,243 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:14,245 INFO Predicting labels for 444 texts
+2022-12-19 23:15:14,353 INFO There are 3/7 active rules
+2022-12-19 23:15:14,353 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:15:14,358 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:15:14,449 INFO DONE, Getting attention scores...
+2022-12-19 23:15:14,509 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:14,509 INFO Predicting labels for 32 texts
+2022-12-19 23:15:14,618 INFO There are 7/7 active rules
+2022-12-19 23:15:14,618 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:15:14,619 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:15:14,643 INFO DONE, Getting attention scores...
+2022-12-19 23:15:14,702 INFO Evaluating teacher dev iter0 on 32 examples
+2022-12-19 23:15:14,706 INFO teacher dev iter0 performance: 78.12
+2022-12-19 23:15:14,706 INFO teacher dev iter0 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:15:14,706 INFO teacher dev iter0 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:15:14,706 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:15:14,706 INFO Predicting labels for 19 texts
+2022-12-19 23:15:14,810 INFO There are 7/7 active rules
+2022-12-19 23:15:14,810 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:15:14,811 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:15:14,838 INFO DONE, Getting attention scores...
+2022-12-19 23:15:14,895 INFO Evaluating teacher test iter0 on 19 examples
+2022-12-19 23:15:14,899 INFO teacher test iter0 performance: 84.21
+2022-12-19 23:15:14,900 INFO teacher test iter0 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:15:14,900 INFO teacher test iter0 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:15:14,900 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:15:14,904 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:15:14,906 INFO Balancing Pseudo Dataset to keep 668 items...
+2022-12-19 23:15:14,909 INFO PSEUDO-DATASET:
+668 examples
+PSEUDO-LABELS:
+1    334
+0    334
+Name: label, dtype: int64
+2022-12-19 23:15:14,909 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:15:18,455 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:15:22,665 INFO Predicting labels for 32 texts
+2022-12-19 23:15:22,873 INFO Evaluating student dev iter0 on 32 examples
+2022-12-19 23:15:22,882 INFO student dev iter0 performance: 56.25
+2022-12-19 23:15:22,882 INFO student dev iter0 confusion matrix:
+[[ 0 14]
+ [ 0 18]]
+2022-12-19 23:15:22,882 INFO student dev iter0 report:
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00        14
+           1       0.56      1.00      0.72        18
+
+    accuracy                           0.56        32
+   macro avg       0.28      0.50      0.36        32
+weighted avg       0.32      0.56      0.40        32
+
+2022-12-19 23:15:22,882 INFO Predicting labels for 19 texts
+2022-12-19 23:15:22,988 INFO Evaluating student test iter0 on 19 examples
+2022-12-19 23:15:22,993 INFO student test iter0 performance: 68.42
+2022-12-19 23:15:22,993 INFO student test iter0 confusion matrix:
+[[ 2  5]
+ [ 1 11]]
+2022-12-19 23:15:22,993 INFO student test iter0 report:
+              precision    recall  f1-score   support
+
+           0       0.67      0.29      0.40         7
+           1       0.69      0.92      0.79        12
+
+    accuracy                           0.68        19
+   macro avg       0.68      0.60      0.59        19
+weighted avg       0.68      0.68      0.64        19
+
+2022-12-19 23:15:22,993 INFO Student Dev performance on iter 0: 56.25
+2022-12-19 23:15:22,993 INFO Student Test performance on iter 0: 68.42105263157895
+2022-12-19 23:15:22,993 INFO Improved dev performance from 34.38 to 56.25
+2022-12-19 23:15:22,994 INFO Saving student_best to ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/student_best
+2022-12-19 23:15:22,994 INFO Saving model at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/student_best/final_model.h5
+2022-12-19 23:15:23,003 INFO Saving teacher at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_best
+2022-12-19 23:15:23,003 INFO Saving rule attention network at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_best/rule_attention_network.h5
+2022-12-19 23:15:23,010 INFO 
+
+	 *** Starting loop 1 ***
+2022-12-19 23:15:23,011 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:15:23,011 INFO Downsampling 444 data
+2022-12-19 23:15:23,011 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:15:23,012 INFO Getting rule predictions
+2022-12-19 23:15:23,012 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:15:23,013 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:23,013 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:23,014 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:15:23,014 INFO Predicting labels for 741 texts
+2022-12-19 23:15:24,142 INFO Predicting labels for 32 texts
+2022-12-19 23:15:25,275 INFO Predicting labels for 444 texts
+2022-12-19 23:15:25,377 INFO Training Rule Attention Network
+2022-12-19 23:15:25,389 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:15:25,390 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:15:25,394 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:15:25,394 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:15:28,518 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:28,519 INFO Predicting labels for 444 texts
+2022-12-19 23:15:28,628 INFO There are 3/7 active rules
+2022-12-19 23:15:28,628 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:15:28,633 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:15:28,731 INFO DONE, Getting attention scores...
+2022-12-19 23:15:28,801 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:28,801 INFO Predicting labels for 32 texts
+2022-12-19 23:15:28,912 INFO There are 7/7 active rules
+2022-12-19 23:15:28,912 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:15:28,912 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:15:28,938 INFO DONE, Getting attention scores...
+2022-12-19 23:15:28,994 INFO Evaluating teacher dev iter1 on 32 examples
+2022-12-19 23:15:28,998 INFO teacher dev iter1 performance: 78.12
+2022-12-19 23:15:28,998 INFO teacher dev iter1 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:15:28,998 INFO teacher dev iter1 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:15:28,998 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:15:28,999 INFO Predicting labels for 19 texts
+2022-12-19 23:15:29,112 INFO There are 7/7 active rules
+2022-12-19 23:15:29,112 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:15:29,113 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:15:29,140 INFO DONE, Getting attention scores...
+2022-12-19 23:15:29,197 INFO Evaluating teacher test iter1 on 19 examples
+2022-12-19 23:15:29,202 INFO teacher test iter1 performance: 84.21
+2022-12-19 23:15:29,203 INFO teacher test iter1 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:15:29,203 INFO teacher test iter1 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:15:29,203 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:15:29,206 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:15:29,207 INFO Balancing Pseudo Dataset to keep 678 items...
+2022-12-19 23:15:29,210 INFO PSEUDO-DATASET:
+678 examples
+PSEUDO-LABELS:
+1    339
+0    339
+Name: label, dtype: int64
+2022-12-19 23:15:29,211 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:15:31,832 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:15:36,796 INFO Predicting labels for 32 texts
+2022-12-19 23:15:36,904 INFO Evaluating student dev iter1 on 32 examples
+2022-12-19 23:15:36,909 INFO student dev iter1 performance: 59.38
+2022-12-19 23:15:36,909 INFO student dev iter1 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:15:36,909 INFO student dev iter1 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:15:36,910 INFO Predicting labels for 19 texts
+2022-12-19 23:15:37,119 INFO Evaluating student test iter1 on 19 examples
+2022-12-19 23:15:37,123 INFO student test iter1 performance: 73.68
+2022-12-19 23:15:37,123 INFO student test iter1 confusion matrix:
+[[ 3  4]
+ [ 1 11]]
+2022-12-19 23:15:37,123 INFO student test iter1 report:
+              precision    recall  f1-score   support
+
+           0       0.75      0.43      0.55         7
+           1       0.73      0.92      0.81        12
+
+    accuracy                           0.74        19
+   macro avg       0.74      0.67      0.68        19
+weighted avg       0.74      0.74      0.72        19
+
+2022-12-19 23:15:37,123 INFO Student Dev performance on iter 1: 59.375
+2022-12-19 23:15:37,123 INFO Student Test performance on iter 1: 73.68421052631578
+2022-12-19 23:15:37,124 INFO Improved dev performance from 56.25 to 59.38
+2022-12-19 23:15:37,124 INFO Saving student_best to ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/student_best
+2022-12-19 23:15:37,124 INFO Saving model at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/student_best/final_model.h5
+2022-12-19 23:15:37,131 INFO Saving teacher at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_best
+2022-12-19 23:15:37,132 INFO Saving rule attention network at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_best/rule_attention_network.h5
+2022-12-19 23:15:37,140 INFO 
+
+	 *** Starting loop 2 ***
+2022-12-19 23:15:37,140 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:15:37,140 INFO Downsampling 444 data
+2022-12-19 23:15:37,141 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:15:37,141 INFO Getting rule predictions
+2022-12-19 23:15:37,141 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:15:37,142 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:37,142 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:37,143 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:15:37,143 INFO Predicting labels for 741 texts
+2022-12-19 23:15:37,252 INFO Predicting labels for 32 texts
+2022-12-19 23:15:37,357 INFO Predicting labels for 444 texts
+2022-12-19 23:15:37,460 INFO Training Rule Attention Network
+2022-12-19 23:15:37,468 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:15:37,469 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:15:37,472 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:15:37,473 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:15:40,375 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:40,377 INFO Predicting labels for 444 texts
+2022-12-19 23:15:40,480 INFO There are 3/7 active rules
+2022-12-19 23:15:40,481 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:15:40,485 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:15:40,572 INFO DONE, Getting attention scores...
+2022-12-19 23:15:40,629 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:40,629 INFO Predicting labels for 32 texts
+2022-12-19 23:15:40,738 INFO There are 7/7 active rules
+2022-12-19 23:15:40,738 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:15:40,739 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:15:40,765 INFO DONE, Getting attention scores...
+2022-12-19 23:15:40,820 INFO Evaluating teacher dev iter2 on 32 examples
+2022-12-19 23:15:40,825 INFO teacher dev iter2 performance: 78.12
+2022-12-19 23:15:40,825 INFO teacher dev iter2 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:15:40,826 INFO teacher dev iter2 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:15:40,826 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:15:40,826 INFO Predicting labels for 19 texts
+2022-12-19 23:15:40,928 INFO There are 7/7 active rules
+2022-12-19 23:15:40,928 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:15:40,929 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:15:40,957 INFO DONE, Getting attention scores...
+2022-12-19 23:15:41,010 INFO Evaluating teacher test iter2 on 19 examples
+2022-12-19 23:15:41,035 INFO teacher test iter2 performance: 84.21
+2022-12-19 23:15:41,035 INFO teacher test iter2 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:15:41,036 INFO teacher test iter2 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:15:41,036 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:15:41,039 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:15:41,040 INFO Balancing Pseudo Dataset to keep 710 items...
+2022-12-19 23:15:41,045 INFO PSEUDO-DATASET:
+710 examples
+PSEUDO-LABELS:
+1    355
+0    355
+Name: label, dtype: int64
+2022-12-19 23:15:41,045 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:15:43,610 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:15:46,701 INFO Predicting labels for 32 texts
+2022-12-19 23:15:46,813 INFO Evaluating student dev iter2 on 32 examples
+2022-12-19 23:15:46,817 INFO student dev iter2 performance: 59.38
+2022-12-19 23:15:46,817 INFO student dev iter2 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:15:46,818 INFO student dev iter2 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:15:46,818 INFO Predicting labels for 19 texts
+2022-12-19 23:15:47,941 INFO Evaluating student test iter2 on 19 examples
+2022-12-19 23:15:47,946 INFO student test iter2 performance: 78.95
+2022-12-19 23:15:47,946 INFO student test iter2 confusion matrix:
+[[ 3  4]
+ [ 0 12]]
+2022-12-19 23:15:47,946 INFO student test iter2 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.43      0.60         7
+           1       0.75      1.00      0.86        12
+
+    accuracy                           0.79        19
+   macro avg       0.88      0.71      0.73        19
+weighted avg       0.84      0.79      0.76        19
+
+2022-12-19 23:15:47,947 INFO Student Dev performance on iter 2: 59.375
+2022-12-19 23:15:47,947 INFO Student Test performance on iter 2: 78.94736842105263
+2022-12-19 23:15:47,947 INFO 
+
+	 *** Starting loop 3 ***
+2022-12-19 23:15:47,947 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:15:47,947 INFO Downsampling 444 data
+2022-12-19 23:15:47,948 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:15:47,948 INFO Getting rule predictions
+2022-12-19 23:15:47,948 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:15:47,949 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:47,949 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:47,949 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:15:47,950 INFO Predicting labels for 741 texts
+2022-12-19 23:15:48,053 INFO Predicting labels for 32 texts
+2022-12-19 23:15:48,158 INFO Predicting labels for 444 texts
+2022-12-19 23:15:48,261 INFO Training Rule Attention Network
+2022-12-19 23:15:48,268 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:15:48,269 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:15:48,277 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:15:48,277 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:15:51,100 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:51,101 INFO Predicting labels for 444 texts
+2022-12-19 23:15:51,210 INFO There are 3/7 active rules
+2022-12-19 23:15:51,210 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:15:51,214 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:15:51,298 INFO DONE, Getting attention scores...
+2022-12-19 23:15:51,354 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:51,355 INFO Predicting labels for 32 texts
+2022-12-19 23:15:51,461 INFO There are 7/7 active rules
+2022-12-19 23:15:51,461 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:15:51,462 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:15:51,486 INFO DONE, Getting attention scores...
+2022-12-19 23:15:51,540 INFO Evaluating teacher dev iter3 on 32 examples
+2022-12-19 23:15:51,544 INFO teacher dev iter3 performance: 78.12
+2022-12-19 23:15:51,544 INFO teacher dev iter3 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:15:51,544 INFO teacher dev iter3 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:15:51,544 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:15:51,544 INFO Predicting labels for 19 texts
+2022-12-19 23:15:51,646 INFO There are 7/7 active rules
+2022-12-19 23:15:51,646 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:15:51,646 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:15:51,674 INFO DONE, Getting attention scores...
+2022-12-19 23:15:51,729 INFO Evaluating teacher test iter3 on 19 examples
+2022-12-19 23:15:51,733 INFO teacher test iter3 performance: 84.21
+2022-12-19 23:15:51,734 INFO teacher test iter3 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:15:51,734 INFO teacher test iter3 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:15:51,734 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:15:51,737 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:15:51,738 INFO Balancing Pseudo Dataset to keep 764 items...
+2022-12-19 23:15:51,742 INFO PSEUDO-DATASET:
+764 examples
+PSEUDO-LABELS:
+1    382
+0    382
+Name: label, dtype: int64
+2022-12-19 23:15:51,743 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:15:53,428 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:15:57,501 INFO Predicting labels for 32 texts
+2022-12-19 23:15:57,609 INFO Evaluating student dev iter3 on 32 examples
+2022-12-19 23:15:57,614 INFO student dev iter3 performance: 56.25
+2022-12-19 23:15:57,614 INFO student dev iter3 confusion matrix:
+[[ 1 13]
+ [ 1 17]]
+2022-12-19 23:15:57,614 INFO student dev iter3 report:
+              precision    recall  f1-score   support
+
+           0       0.50      0.07      0.12        14
+           1       0.57      0.94      0.71        18
+
+    accuracy                           0.56        32
+   macro avg       0.53      0.51      0.42        32
+weighted avg       0.54      0.56      0.45        32
+
+2022-12-19 23:15:57,614 INFO Predicting labels for 19 texts
+2022-12-19 23:15:57,720 INFO Evaluating student test iter3 on 19 examples
+2022-12-19 23:15:57,725 INFO student test iter3 performance: 84.21
+2022-12-19 23:15:57,725 INFO student test iter3 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:15:57,726 INFO student test iter3 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:15:57,726 INFO Student Dev performance on iter 3: 56.25
+2022-12-19 23:15:57,726 INFO Student Test performance on iter 3: 84.21052631578947
+2022-12-19 23:15:57,726 INFO 
+
+	 *** Starting loop 4 ***
+2022-12-19 23:15:57,726 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:15:57,726 INFO Downsampling 444 data
+2022-12-19 23:15:57,727 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:15:57,727 INFO Getting rule predictions
+2022-12-19 23:15:57,727 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:15:57,728 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:15:57,728 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:15:57,729 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:15:57,729 INFO Predicting labels for 741 texts
+2022-12-19 23:15:57,834 INFO Predicting labels for 32 texts
+2022-12-19 23:15:57,940 INFO Predicting labels for 444 texts
+2022-12-19 23:15:58,043 INFO Training Rule Attention Network
+2022-12-19 23:15:58,051 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:15:58,052 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:15:58,058 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:15:58,058 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:01,600 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:01,601 INFO Predicting labels for 444 texts
+2022-12-19 23:16:01,709 INFO There are 3/7 active rules
+2022-12-19 23:16:01,710 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:01,714 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:01,802 INFO DONE, Getting attention scores...
+2022-12-19 23:16:01,859 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:01,859 INFO Predicting labels for 32 texts
+2022-12-19 23:16:01,965 INFO There are 7/7 active rules
+2022-12-19 23:16:01,965 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:01,966 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:01,990 INFO DONE, Getting attention scores...
+2022-12-19 23:16:02,043 INFO Evaluating teacher dev iter4 on 32 examples
+2022-12-19 23:16:02,047 INFO teacher dev iter4 performance: 78.12
+2022-12-19 23:16:02,047 INFO teacher dev iter4 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:02,047 INFO teacher dev iter4 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:02,047 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:02,047 INFO Predicting labels for 19 texts
+2022-12-19 23:16:02,147 INFO There are 7/7 active rules
+2022-12-19 23:16:02,147 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:02,148 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:02,178 INFO DONE, Getting attention scores...
+2022-12-19 23:16:02,233 INFO Evaluating teacher test iter4 on 19 examples
+2022-12-19 23:16:02,238 INFO teacher test iter4 performance: 84.21
+2022-12-19 23:16:02,238 INFO teacher test iter4 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:02,238 INFO teacher test iter4 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:02,239 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:02,242 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:02,244 INFO Balancing Pseudo Dataset to keep 684 items...
+2022-12-19 23:16:02,249 INFO PSEUDO-DATASET:
+684 examples
+PSEUDO-LABELS:
+1    342
+0    342
+Name: label, dtype: int64
+2022-12-19 23:16:02,250 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:03,855 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:05,313 INFO Predicting labels for 32 texts
+2022-12-19 23:16:05,423 INFO Evaluating student dev iter4 on 32 examples
+2022-12-19 23:16:05,428 INFO student dev iter4 performance: 56.25
+2022-12-19 23:16:05,428 INFO student dev iter4 confusion matrix:
+[[ 1 13]
+ [ 1 17]]
+2022-12-19 23:16:05,428 INFO student dev iter4 report:
+              precision    recall  f1-score   support
+
+           0       0.50      0.07      0.12        14
+           1       0.57      0.94      0.71        18
+
+    accuracy                           0.56        32
+   macro avg       0.53      0.51      0.42        32
+weighted avg       0.54      0.56      0.45        32
+
+2022-12-19 23:16:05,429 INFO Predicting labels for 19 texts
+2022-12-19 23:16:05,537 INFO Evaluating student test iter4 on 19 examples
+2022-12-19 23:16:05,542 INFO student test iter4 performance: 84.21
+2022-12-19 23:16:05,542 INFO student test iter4 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:05,542 INFO student test iter4 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:05,542 INFO Student Dev performance on iter 4: 56.25
+2022-12-19 23:16:05,542 INFO Student Test performance on iter 4: 84.21052631578947
+2022-12-19 23:16:05,542 INFO 
+
+	 *** Starting loop 5 ***
+2022-12-19 23:16:05,543 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:05,543 INFO Downsampling 444 data
+2022-12-19 23:16:05,543 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:05,544 INFO Getting rule predictions
+2022-12-19 23:16:05,544 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:05,545 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:05,545 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:05,546 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:05,546 INFO Predicting labels for 741 texts
+2022-12-19 23:16:05,654 INFO Predicting labels for 32 texts
+2022-12-19 23:16:05,765 INFO Predicting labels for 444 texts
+2022-12-19 23:16:05,871 INFO Training Rule Attention Network
+2022-12-19 23:16:05,878 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:05,879 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:05,883 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:05,883 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:08,844 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:08,845 INFO Predicting labels for 444 texts
+2022-12-19 23:16:08,954 INFO There are 3/7 active rules
+2022-12-19 23:16:08,973 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:08,979 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:09,063 INFO DONE, Getting attention scores...
+2022-12-19 23:16:09,120 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:09,120 INFO Predicting labels for 32 texts
+2022-12-19 23:16:09,226 INFO There are 7/7 active rules
+2022-12-19 23:16:09,226 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:09,227 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:09,251 INFO DONE, Getting attention scores...
+2022-12-19 23:16:09,306 INFO Evaluating teacher dev iter5 on 32 examples
+2022-12-19 23:16:09,310 INFO teacher dev iter5 performance: 78.12
+2022-12-19 23:16:09,311 INFO teacher dev iter5 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:09,311 INFO teacher dev iter5 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:09,311 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:09,311 INFO Predicting labels for 19 texts
+2022-12-19 23:16:09,413 INFO There are 7/7 active rules
+2022-12-19 23:16:09,413 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:09,414 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:09,444 INFO DONE, Getting attention scores...
+2022-12-19 23:16:09,508 INFO Evaluating teacher test iter5 on 19 examples
+2022-12-19 23:16:09,512 INFO teacher test iter5 performance: 84.21
+2022-12-19 23:16:09,513 INFO teacher test iter5 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:09,513 INFO teacher test iter5 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:09,513 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:09,516 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:09,518 INFO Balancing Pseudo Dataset to keep 756 items...
+2022-12-19 23:16:09,522 INFO PSEUDO-DATASET:
+756 examples
+PSEUDO-LABELS:
+1    378
+0    378
+Name: label, dtype: int64
+2022-12-19 23:16:09,522 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:10,753 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:12,293 INFO Predicting labels for 32 texts
+2022-12-19 23:16:12,396 INFO Evaluating student dev iter5 on 32 examples
+2022-12-19 23:16:12,401 INFO student dev iter5 performance: 59.38
+2022-12-19 23:16:12,401 INFO student dev iter5 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:16:12,401 INFO student dev iter5 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:16:12,402 INFO Predicting labels for 19 texts
+2022-12-19 23:16:12,514 INFO Evaluating student test iter5 on 19 examples
+2022-12-19 23:16:12,519 INFO student test iter5 performance: 84.21
+2022-12-19 23:16:12,519 INFO student test iter5 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:12,520 INFO student test iter5 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:12,520 INFO Student Dev performance on iter 5: 59.375
+2022-12-19 23:16:12,520 INFO Student Test performance on iter 5: 84.21052631578947
+2022-12-19 23:16:12,520 INFO 
+
+	 *** Starting loop 6 ***
+2022-12-19 23:16:12,520 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:12,520 INFO Downsampling 444 data
+2022-12-19 23:16:12,521 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:12,521 INFO Getting rule predictions
+2022-12-19 23:16:12,521 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:12,522 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:12,522 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:12,523 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:12,524 INFO Predicting labels for 741 texts
+2022-12-19 23:16:12,632 INFO Predicting labels for 32 texts
+2022-12-19 23:16:12,740 INFO Predicting labels for 444 texts
+2022-12-19 23:16:12,845 INFO Training Rule Attention Network
+2022-12-19 23:16:12,852 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:12,853 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:12,857 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:12,857 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:15,722 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:15,723 INFO Predicting labels for 444 texts
+2022-12-19 23:16:15,833 INFO There are 3/7 active rules
+2022-12-19 23:16:15,834 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:15,838 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:15,924 INFO DONE, Getting attention scores...
+2022-12-19 23:16:15,983 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:15,983 INFO Predicting labels for 32 texts
+2022-12-19 23:16:16,088 INFO There are 7/7 active rules
+2022-12-19 23:16:16,088 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:16,089 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:16,113 INFO DONE, Getting attention scores...
+2022-12-19 23:16:16,168 INFO Evaluating teacher dev iter6 on 32 examples
+2022-12-19 23:16:16,172 INFO teacher dev iter6 performance: 78.12
+2022-12-19 23:16:16,173 INFO teacher dev iter6 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:16,173 INFO teacher dev iter6 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:16,173 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:16,173 INFO Predicting labels for 19 texts
+2022-12-19 23:16:16,279 INFO There are 7/7 active rules
+2022-12-19 23:16:16,280 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:16,280 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:16,304 INFO DONE, Getting attention scores...
+2022-12-19 23:16:16,362 INFO Evaluating teacher test iter6 on 19 examples
+2022-12-19 23:16:16,366 INFO teacher test iter6 performance: 84.21
+2022-12-19 23:16:16,367 INFO teacher test iter6 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:16,367 INFO teacher test iter6 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:16,367 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:16,370 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:16,371 INFO Balancing Pseudo Dataset to keep 680 items...
+2022-12-19 23:16:16,375 INFO PSEUDO-DATASET:
+680 examples
+PSEUDO-LABELS:
+1    340
+0    340
+Name: label, dtype: int64
+2022-12-19 23:16:16,375 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:17,169 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:18,643 INFO Predicting labels for 32 texts
+2022-12-19 23:16:18,752 INFO Evaluating student dev iter6 on 32 examples
+2022-12-19 23:16:18,757 INFO student dev iter6 performance: 59.38
+2022-12-19 23:16:18,757 INFO student dev iter6 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:16:18,757 INFO student dev iter6 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:16:18,757 INFO Predicting labels for 19 texts
+2022-12-19 23:16:18,865 INFO Evaluating student test iter6 on 19 examples
+2022-12-19 23:16:18,869 INFO student test iter6 performance: 84.21
+2022-12-19 23:16:18,869 INFO student test iter6 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:18,869 INFO student test iter6 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:18,870 INFO Student Dev performance on iter 6: 59.375
+2022-12-19 23:16:18,870 INFO Student Test performance on iter 6: 84.21052631578947
+2022-12-19 23:16:18,870 INFO 
+
+	 *** Starting loop 7 ***
+2022-12-19 23:16:18,870 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:18,870 INFO Downsampling 444 data
+2022-12-19 23:16:18,871 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:18,871 INFO Getting rule predictions
+2022-12-19 23:16:18,871 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:18,872 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:18,872 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:18,873 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:18,874 INFO Predicting labels for 741 texts
+2022-12-19 23:16:18,982 INFO Predicting labels for 32 texts
+2022-12-19 23:16:19,087 INFO Predicting labels for 444 texts
+2022-12-19 23:16:20,210 INFO Training Rule Attention Network
+2022-12-19 23:16:20,218 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:20,218 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:20,222 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:20,222 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:23,151 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:23,152 INFO Predicting labels for 444 texts
+2022-12-19 23:16:23,258 INFO There are 3/7 active rules
+2022-12-19 23:16:23,259 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:23,263 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:23,351 INFO DONE, Getting attention scores...
+2022-12-19 23:16:23,409 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:23,410 INFO Predicting labels for 32 texts
+2022-12-19 23:16:23,517 INFO There are 7/7 active rules
+2022-12-19 23:16:23,518 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:23,519 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:23,545 INFO DONE, Getting attention scores...
+2022-12-19 23:16:23,599 INFO Evaluating teacher dev iter7 on 32 examples
+2022-12-19 23:16:23,604 INFO teacher dev iter7 performance: 78.12
+2022-12-19 23:16:23,604 INFO teacher dev iter7 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:23,605 INFO teacher dev iter7 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:23,605 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:23,605 INFO Predicting labels for 19 texts
+2022-12-19 23:16:23,711 INFO There are 7/7 active rules
+2022-12-19 23:16:23,712 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:23,712 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:23,735 INFO DONE, Getting attention scores...
+2022-12-19 23:16:23,793 INFO Evaluating teacher test iter7 on 19 examples
+2022-12-19 23:16:23,798 INFO teacher test iter7 performance: 84.21
+2022-12-19 23:16:23,798 INFO teacher test iter7 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:23,798 INFO teacher test iter7 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:23,798 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:23,801 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:23,802 INFO Balancing Pseudo Dataset to keep 750 items...
+2022-12-19 23:16:23,806 INFO PSEUDO-DATASET:
+750 examples
+PSEUDO-LABELS:
+1    375
+0    375
+Name: label, dtype: int64
+2022-12-19 23:16:23,806 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:25,720 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:27,157 INFO Predicting labels for 32 texts
+2022-12-19 23:16:27,268 INFO Evaluating student dev iter7 on 32 examples
+2022-12-19 23:16:27,273 INFO student dev iter7 performance: 59.38
+2022-12-19 23:16:27,274 INFO student dev iter7 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:16:27,274 INFO student dev iter7 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:16:27,274 INFO Predicting labels for 19 texts
+2022-12-19 23:16:27,469 INFO Evaluating student test iter7 on 19 examples
+2022-12-19 23:16:27,474 INFO student test iter7 performance: 84.21
+2022-12-19 23:16:27,475 INFO student test iter7 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:27,475 INFO student test iter7 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:27,475 INFO Student Dev performance on iter 7: 59.375
+2022-12-19 23:16:27,475 INFO Student Test performance on iter 7: 84.21052631578947
+2022-12-19 23:16:27,475 INFO 
+
+	 *** Starting loop 8 ***
+2022-12-19 23:16:27,475 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:27,475 INFO Downsampling 444 data
+2022-12-19 23:16:27,476 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:27,476 INFO Getting rule predictions
+2022-12-19 23:16:27,476 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:27,477 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:27,478 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:27,478 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:27,479 INFO Predicting labels for 741 texts
+2022-12-19 23:16:27,591 INFO Predicting labels for 32 texts
+2022-12-19 23:16:27,698 INFO Predicting labels for 444 texts
+2022-12-19 23:16:27,804 INFO Training Rule Attention Network
+2022-12-19 23:16:27,812 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:27,813 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:27,816 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:27,817 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:30,653 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:30,654 INFO Predicting labels for 444 texts
+2022-12-19 23:16:30,761 INFO There are 3/7 active rules
+2022-12-19 23:16:30,761 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:30,766 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:30,852 INFO DONE, Getting attention scores...
+2022-12-19 23:16:30,909 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:30,909 INFO Predicting labels for 32 texts
+2022-12-19 23:16:31,015 INFO There are 7/7 active rules
+2022-12-19 23:16:31,015 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:31,016 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:31,041 INFO DONE, Getting attention scores...
+2022-12-19 23:16:31,096 INFO Evaluating teacher dev iter8 on 32 examples
+2022-12-19 23:16:31,100 INFO teacher dev iter8 performance: 78.12
+2022-12-19 23:16:31,101 INFO teacher dev iter8 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:31,101 INFO teacher dev iter8 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:31,101 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:31,101 INFO Predicting labels for 19 texts
+2022-12-19 23:16:31,205 INFO There are 7/7 active rules
+2022-12-19 23:16:31,206 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:31,207 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:31,235 INFO DONE, Getting attention scores...
+2022-12-19 23:16:31,289 INFO Evaluating teacher test iter8 on 19 examples
+2022-12-19 23:16:31,294 INFO teacher test iter8 performance: 84.21
+2022-12-19 23:16:31,294 INFO teacher test iter8 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:31,294 INFO teacher test iter8 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:31,294 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:31,297 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:31,298 INFO Balancing Pseudo Dataset to keep 688 items...
+2022-12-19 23:16:31,302 INFO PSEUDO-DATASET:
+688 examples
+PSEUDO-LABELS:
+1    344
+0    344
+Name: label, dtype: int64
+2022-12-19 23:16:31,302 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:32,151 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:33,650 INFO Predicting labels for 32 texts
+2022-12-19 23:16:33,755 INFO Evaluating student dev iter8 on 32 examples
+2022-12-19 23:16:33,762 INFO student dev iter8 performance: 59.38
+2022-12-19 23:16:33,762 INFO student dev iter8 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:16:33,762 INFO student dev iter8 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:16:33,762 INFO Predicting labels for 19 texts
+2022-12-19 23:16:33,870 INFO Evaluating student test iter8 on 19 examples
+2022-12-19 23:16:33,875 INFO student test iter8 performance: 84.21
+2022-12-19 23:16:33,875 INFO student test iter8 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:33,875 INFO student test iter8 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:33,875 INFO Student Dev performance on iter 8: 59.375
+2022-12-19 23:16:33,875 INFO Student Test performance on iter 8: 84.21052631578947
+2022-12-19 23:16:33,876 INFO 
+
+	 *** Starting loop 9 ***
+2022-12-19 23:16:33,876 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:33,876 INFO Downsampling 444 data
+2022-12-19 23:16:33,876 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:33,877 INFO Getting rule predictions
+2022-12-19 23:16:33,877 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:33,878 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:33,878 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:33,879 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:33,880 INFO Predicting labels for 741 texts
+2022-12-19 23:16:33,986 INFO Predicting labels for 32 texts
+2022-12-19 23:16:34,090 INFO Predicting labels for 444 texts
+2022-12-19 23:16:34,194 INFO Training Rule Attention Network
+2022-12-19 23:16:34,201 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:34,202 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:34,206 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:34,206 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:37,161 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:37,162 INFO Predicting labels for 444 texts
+2022-12-19 23:16:37,279 INFO There are 3/7 active rules
+2022-12-19 23:16:37,280 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:37,284 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:37,376 INFO DONE, Getting attention scores...
+2022-12-19 23:16:37,435 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:37,436 INFO Predicting labels for 32 texts
+2022-12-19 23:16:37,545 INFO There are 7/7 active rules
+2022-12-19 23:16:37,546 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:37,546 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:37,572 INFO DONE, Getting attention scores...
+2022-12-19 23:16:37,627 INFO Evaluating teacher dev iter9 on 32 examples
+2022-12-19 23:16:37,632 INFO teacher dev iter9 performance: 78.12
+2022-12-19 23:16:37,632 INFO teacher dev iter9 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:37,632 INFO teacher dev iter9 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:37,632 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:37,633 INFO Predicting labels for 19 texts
+2022-12-19 23:16:37,741 INFO There are 7/7 active rules
+2022-12-19 23:16:37,741 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:37,742 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:37,766 INFO DONE, Getting attention scores...
+2022-12-19 23:16:37,820 INFO Evaluating teacher test iter9 on 19 examples
+2022-12-19 23:16:37,825 INFO teacher test iter9 performance: 84.21
+2022-12-19 23:16:37,825 INFO teacher test iter9 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:37,825 INFO teacher test iter9 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:37,826 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:37,828 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:37,830 INFO Balancing Pseudo Dataset to keep 742 items...
+2022-12-19 23:16:37,834 INFO PSEUDO-DATASET:
+742 examples
+PSEUDO-LABELS:
+1    371
+0    371
+Name: label, dtype: int64
+2022-12-19 23:16:37,835 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:39,684 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:41,039 INFO Predicting labels for 32 texts
+2022-12-19 23:16:41,144 INFO Evaluating student dev iter9 on 32 examples
+2022-12-19 23:16:41,148 INFO student dev iter9 performance: 59.38
+2022-12-19 23:16:41,149 INFO student dev iter9 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:16:41,149 INFO student dev iter9 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:16:41,149 INFO Predicting labels for 19 texts
+2022-12-19 23:16:41,253 INFO Evaluating student test iter9 on 19 examples
+2022-12-19 23:16:41,257 INFO student test iter9 performance: 84.21
+2022-12-19 23:16:41,258 INFO student test iter9 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:41,258 INFO student test iter9 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:41,258 INFO Student Dev performance on iter 9: 59.375
+2022-12-19 23:16:41,258 INFO Student Test performance on iter 9: 84.21052631578947
+2022-12-19 23:16:41,258 INFO 
+
+	 *** Starting loop 10 ***
+2022-12-19 23:16:41,258 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:41,258 INFO Downsampling 444 data
+2022-12-19 23:16:41,259 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:41,259 INFO Getting rule predictions
+2022-12-19 23:16:41,260 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:41,261 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:41,261 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:41,261 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:41,262 INFO Predicting labels for 741 texts
+2022-12-19 23:16:41,365 INFO Predicting labels for 32 texts
+2022-12-19 23:16:41,470 INFO Predicting labels for 444 texts
+2022-12-19 23:16:41,579 INFO Training Rule Attention Network
+2022-12-19 23:16:41,587 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:41,588 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:41,594 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:41,594 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:44,901 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:44,903 INFO Predicting labels for 444 texts
+2022-12-19 23:16:45,017 INFO There are 3/7 active rules
+2022-12-19 23:16:45,017 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:45,021 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:45,112 INFO DONE, Getting attention scores...
+2022-12-19 23:16:45,176 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:45,176 INFO Predicting labels for 32 texts
+2022-12-19 23:16:45,291 INFO There are 7/7 active rules
+2022-12-19 23:16:45,291 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:45,292 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:45,316 INFO DONE, Getting attention scores...
+2022-12-19 23:16:45,372 INFO Evaluating teacher dev iter10 on 32 examples
+2022-12-19 23:16:45,377 INFO teacher dev iter10 performance: 78.12
+2022-12-19 23:16:45,377 INFO teacher dev iter10 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:45,377 INFO teacher dev iter10 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:45,378 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:45,378 INFO Predicting labels for 19 texts
+2022-12-19 23:16:45,496 INFO There are 7/7 active rules
+2022-12-19 23:16:45,496 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:45,497 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:45,524 INFO DONE, Getting attention scores...
+2022-12-19 23:16:45,582 INFO Evaluating teacher test iter10 on 19 examples
+2022-12-19 23:16:45,586 INFO teacher test iter10 performance: 84.21
+2022-12-19 23:16:45,586 INFO teacher test iter10 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:45,587 INFO teacher test iter10 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:45,587 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:45,590 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:45,592 INFO Balancing Pseudo Dataset to keep 696 items...
+2022-12-19 23:16:45,596 INFO PSEUDO-DATASET:
+696 examples
+PSEUDO-LABELS:
+1    348
+0    348
+Name: label, dtype: int64
+2022-12-19 23:16:45,596 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:46,406 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:49,095 INFO Predicting labels for 32 texts
+2022-12-19 23:16:49,201 INFO Evaluating student dev iter10 on 32 examples
+2022-12-19 23:16:49,206 INFO student dev iter10 performance: 59.38
+2022-12-19 23:16:49,206 INFO student dev iter10 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:16:49,206 INFO student dev iter10 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:16:49,206 INFO Predicting labels for 19 texts
+2022-12-19 23:16:49,311 INFO Evaluating student test iter10 on 19 examples
+2022-12-19 23:16:49,316 INFO student test iter10 performance: 84.21
+2022-12-19 23:16:49,316 INFO student test iter10 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:49,316 INFO student test iter10 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:49,316 INFO Student Dev performance on iter 10: 59.375
+2022-12-19 23:16:49,316 INFO Student Test performance on iter 10: 84.21052631578947
+2022-12-19 23:16:49,317 INFO 
+
+	 *** Starting loop 11 ***
+2022-12-19 23:16:49,317 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:49,317 INFO Downsampling 444 data
+2022-12-19 23:16:49,317 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:49,317 INFO Getting rule predictions
+2022-12-19 23:16:49,317 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:49,318 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:49,318 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:49,319 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:49,320 INFO Predicting labels for 741 texts
+2022-12-19 23:16:49,446 INFO Predicting labels for 32 texts
+2022-12-19 23:16:49,554 INFO Predicting labels for 444 texts
+2022-12-19 23:16:49,657 INFO Training Rule Attention Network
+2022-12-19 23:16:49,668 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:49,669 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:49,672 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:49,672 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:16:53,085 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:53,086 INFO Predicting labels for 444 texts
+2022-12-19 23:16:53,201 INFO There are 3/7 active rules
+2022-12-19 23:16:53,202 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:16:53,206 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:16:53,297 INFO DONE, Getting attention scores...
+2022-12-19 23:16:53,356 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:53,356 INFO Predicting labels for 32 texts
+2022-12-19 23:16:53,470 INFO There are 7/7 active rules
+2022-12-19 23:16:53,470 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:16:53,471 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:16:53,496 INFO DONE, Getting attention scores...
+2022-12-19 23:16:53,558 INFO Evaluating teacher dev iter11 on 32 examples
+2022-12-19 23:16:53,562 INFO teacher dev iter11 performance: 78.12
+2022-12-19 23:16:53,562 INFO teacher dev iter11 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:16:53,562 INFO teacher dev iter11 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:16:53,562 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:16:53,562 INFO Predicting labels for 19 texts
+2022-12-19 23:16:53,674 INFO There are 7/7 active rules
+2022-12-19 23:16:53,674 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:16:53,675 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:16:53,700 INFO DONE, Getting attention scores...
+2022-12-19 23:16:53,760 INFO Evaluating teacher test iter11 on 19 examples
+2022-12-19 23:16:53,765 INFO teacher test iter11 performance: 84.21
+2022-12-19 23:16:53,765 INFO teacher test iter11 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:53,765 INFO teacher test iter11 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:53,766 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:16:53,769 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:16:53,771 INFO Balancing Pseudo Dataset to keep 676 items...
+2022-12-19 23:16:53,775 INFO PSEUDO-DATASET:
+676 examples
+PSEUDO-LABELS:
+1    338
+0    338
+Name: label, dtype: int64
+2022-12-19 23:16:53,775 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:16:55,794 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:16:58,373 INFO Predicting labels for 32 texts
+2022-12-19 23:16:58,498 INFO Evaluating student dev iter11 on 32 examples
+2022-12-19 23:16:58,504 INFO student dev iter11 performance: 59.38
+2022-12-19 23:16:58,504 INFO student dev iter11 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:16:58,504 INFO student dev iter11 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:16:58,504 INFO Predicting labels for 19 texts
+2022-12-19 23:16:58,627 INFO Evaluating student test iter11 on 19 examples
+2022-12-19 23:16:58,632 INFO student test iter11 performance: 84.21
+2022-12-19 23:16:58,632 INFO student test iter11 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:16:58,632 INFO student test iter11 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:16:58,632 INFO Student Dev performance on iter 11: 59.375
+2022-12-19 23:16:58,632 INFO Student Test performance on iter 11: 84.21052631578947
+2022-12-19 23:16:58,632 INFO 
+
+	 *** Starting loop 12 ***
+2022-12-19 23:16:58,633 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:16:58,633 INFO Downsampling 444 data
+2022-12-19 23:16:58,633 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:16:58,633 INFO Getting rule predictions
+2022-12-19 23:16:58,634 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:16:58,634 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:16:58,635 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:16:58,635 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:16:58,636 INFO Predicting labels for 741 texts
+2022-12-19 23:16:58,750 INFO Predicting labels for 32 texts
+2022-12-19 23:16:58,862 INFO Predicting labels for 444 texts
+2022-12-19 23:16:58,981 INFO Training Rule Attention Network
+2022-12-19 23:16:58,989 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:16:58,990 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:16:58,994 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:16:58,994 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:17:02,226 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:02,227 INFO Predicting labels for 444 texts
+2022-12-19 23:17:02,345 INFO There are 3/7 active rules
+2022-12-19 23:17:02,345 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:17:02,353 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:17:02,446 INFO DONE, Getting attention scores...
+2022-12-19 23:17:02,509 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:02,509 INFO Predicting labels for 32 texts
+2022-12-19 23:17:02,623 INFO There are 7/7 active rules
+2022-12-19 23:17:02,623 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:17:02,624 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:17:02,656 INFO DONE, Getting attention scores...
+2022-12-19 23:17:02,714 INFO Evaluating teacher dev iter12 on 32 examples
+2022-12-19 23:17:02,719 INFO teacher dev iter12 performance: 78.12
+2022-12-19 23:17:02,719 INFO teacher dev iter12 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:17:02,719 INFO teacher dev iter12 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:17:02,719 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:17:02,719 INFO Predicting labels for 19 texts
+2022-12-19 23:17:02,830 INFO There are 7/7 active rules
+2022-12-19 23:17:02,831 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:17:02,831 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:17:02,856 INFO DONE, Getting attention scores...
+2022-12-19 23:17:02,916 INFO Evaluating teacher test iter12 on 19 examples
+2022-12-19 23:17:02,920 INFO teacher test iter12 performance: 84.21
+2022-12-19 23:17:02,921 INFO teacher test iter12 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:02,921 INFO teacher test iter12 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:02,921 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:17:02,924 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:17:02,925 INFO Balancing Pseudo Dataset to keep 746 items...
+2022-12-19 23:17:02,929 INFO PSEUDO-DATASET:
+746 examples
+PSEUDO-LABELS:
+1    373
+0    373
+Name: label, dtype: int64
+2022-12-19 23:17:02,929 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:17:04,869 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:17:06,334 INFO Predicting labels for 32 texts
+2022-12-19 23:17:06,440 INFO Evaluating student dev iter12 on 32 examples
+2022-12-19 23:17:06,445 INFO student dev iter12 performance: 59.38
+2022-12-19 23:17:06,446 INFO student dev iter12 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:17:06,446 INFO student dev iter12 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:17:06,446 INFO Predicting labels for 19 texts
+2022-12-19 23:17:06,551 INFO Evaluating student test iter12 on 19 examples
+2022-12-19 23:17:06,555 INFO student test iter12 performance: 84.21
+2022-12-19 23:17:06,555 INFO student test iter12 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:06,555 INFO student test iter12 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:06,555 INFO Student Dev performance on iter 12: 59.375
+2022-12-19 23:17:06,555 INFO Student Test performance on iter 12: 84.21052631578947
+2022-12-19 23:17:06,555 INFO 
+
+	 *** Starting loop 13 ***
+2022-12-19 23:17:06,556 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:17:06,556 INFO Downsampling 444 data
+2022-12-19 23:17:06,556 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:17:06,556 INFO Getting rule predictions
+2022-12-19 23:17:06,556 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:17:06,557 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:06,557 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:06,558 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:17:06,559 INFO Predicting labels for 741 texts
+2022-12-19 23:17:06,666 INFO Predicting labels for 32 texts
+2022-12-19 23:17:06,774 INFO Predicting labels for 444 texts
+2022-12-19 23:17:06,881 INFO Training Rule Attention Network
+2022-12-19 23:17:06,889 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:17:06,890 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:17:06,894 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:17:06,894 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:17:10,056 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:10,057 INFO Predicting labels for 444 texts
+2022-12-19 23:17:10,170 INFO There are 3/7 active rules
+2022-12-19 23:17:10,171 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:17:10,175 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:17:10,267 INFO DONE, Getting attention scores...
+2022-12-19 23:17:10,331 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:10,331 INFO Predicting labels for 32 texts
+2022-12-19 23:17:10,446 INFO There are 7/7 active rules
+2022-12-19 23:17:10,446 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:17:10,447 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:17:10,472 INFO DONE, Getting attention scores...
+2022-12-19 23:17:10,531 INFO Evaluating teacher dev iter13 on 32 examples
+2022-12-19 23:17:10,536 INFO teacher dev iter13 performance: 78.12
+2022-12-19 23:17:10,536 INFO teacher dev iter13 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:17:10,536 INFO teacher dev iter13 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:17:10,536 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:17:10,536 INFO Predicting labels for 19 texts
+2022-12-19 23:17:10,668 INFO There are 7/7 active rules
+2022-12-19 23:17:10,668 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:17:10,668 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:17:10,694 INFO DONE, Getting attention scores...
+2022-12-19 23:17:10,750 INFO Evaluating teacher test iter13 on 19 examples
+2022-12-19 23:17:10,755 INFO teacher test iter13 performance: 84.21
+2022-12-19 23:17:10,755 INFO teacher test iter13 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:10,755 INFO teacher test iter13 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:10,755 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:17:10,759 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:17:10,760 INFO Balancing Pseudo Dataset to keep 686 items...
+2022-12-19 23:17:10,766 INFO PSEUDO-DATASET:
+686 examples
+PSEUDO-LABELS:
+1    343
+0    343
+Name: label, dtype: int64
+2022-12-19 23:17:10,766 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:17:13,612 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:17:16,036 INFO Predicting labels for 32 texts
+2022-12-19 23:17:16,142 INFO Evaluating student dev iter13 on 32 examples
+2022-12-19 23:17:16,147 INFO student dev iter13 performance: 59.38
+2022-12-19 23:17:16,147 INFO student dev iter13 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:17:16,147 INFO student dev iter13 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:17:16,148 INFO Predicting labels for 19 texts
+2022-12-19 23:17:16,253 INFO Evaluating student test iter13 on 19 examples
+2022-12-19 23:17:16,258 INFO student test iter13 performance: 84.21
+2022-12-19 23:17:16,258 INFO student test iter13 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:16,258 INFO student test iter13 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:16,259 INFO Student Dev performance on iter 13: 59.375
+2022-12-19 23:17:16,259 INFO Student Test performance on iter 13: 84.21052631578947
+2022-12-19 23:17:16,259 INFO 
+
+	 *** Starting loop 14 ***
+2022-12-19 23:17:16,259 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:17:16,259 INFO Downsampling 444 data
+2022-12-19 23:17:16,260 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:17:16,260 INFO Getting rule predictions
+2022-12-19 23:17:16,261 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:17:16,262 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:16,262 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:16,262 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:17:16,263 INFO Predicting labels for 741 texts
+2022-12-19 23:17:16,378 INFO Predicting labels for 32 texts
+2022-12-19 23:17:16,497 INFO Predicting labels for 444 texts
+2022-12-19 23:17:16,616 INFO Training Rule Attention Network
+2022-12-19 23:17:16,623 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:17:16,624 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:17:16,629 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:17:16,629 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:17:19,958 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:19,959 INFO Predicting labels for 444 texts
+2022-12-19 23:17:21,087 INFO There are 3/7 active rules
+2022-12-19 23:17:21,087 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:17:21,092 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:17:21,187 INFO DONE, Getting attention scores...
+2022-12-19 23:17:21,249 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:21,250 INFO Predicting labels for 32 texts
+2022-12-19 23:17:21,366 INFO There are 7/7 active rules
+2022-12-19 23:17:21,366 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:17:21,367 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:17:21,393 INFO DONE, Getting attention scores...
+2022-12-19 23:17:21,457 INFO Evaluating teacher dev iter14 on 32 examples
+2022-12-19 23:17:21,461 INFO teacher dev iter14 performance: 78.12
+2022-12-19 23:17:21,462 INFO teacher dev iter14 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:17:21,462 INFO teacher dev iter14 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:17:21,462 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:17:21,462 INFO Predicting labels for 19 texts
+2022-12-19 23:17:21,570 INFO There are 7/7 active rules
+2022-12-19 23:17:21,570 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:17:21,571 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:17:21,596 INFO DONE, Getting attention scores...
+2022-12-19 23:17:21,652 INFO Evaluating teacher test iter14 on 19 examples
+2022-12-19 23:17:21,656 INFO teacher test iter14 performance: 84.21
+2022-12-19 23:17:21,657 INFO teacher test iter14 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:21,657 INFO teacher test iter14 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:21,657 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:17:21,660 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:17:21,662 INFO Balancing Pseudo Dataset to keep 660 items...
+2022-12-19 23:17:21,666 INFO PSEUDO-DATASET:
+660 examples
+PSEUDO-LABELS:
+1    330
+0    330
+Name: label, dtype: int64
+2022-12-19 23:17:21,666 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:17:23,735 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:17:25,479 INFO Predicting labels for 32 texts
+2022-12-19 23:17:25,602 INFO Evaluating student dev iter14 on 32 examples
+2022-12-19 23:17:25,607 INFO student dev iter14 performance: 59.38
+2022-12-19 23:17:25,607 INFO student dev iter14 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:17:25,607 INFO student dev iter14 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:17:25,608 INFO Predicting labels for 19 texts
+2022-12-19 23:17:25,731 INFO Evaluating student test iter14 on 19 examples
+2022-12-19 23:17:25,735 INFO student test iter14 performance: 84.21
+2022-12-19 23:17:25,736 INFO student test iter14 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:25,736 INFO student test iter14 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:25,736 INFO Student Dev performance on iter 14: 59.375
+2022-12-19 23:17:25,736 INFO Student Test performance on iter 14: 84.21052631578947
+2022-12-19 23:17:25,736 INFO 
+
+	 *** Starting loop 15 ***
+2022-12-19 23:17:25,736 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:17:25,736 INFO Downsampling 444 data
+2022-12-19 23:17:25,737 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:17:25,737 INFO Getting rule predictions
+2022-12-19 23:17:25,737 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:17:25,738 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:25,738 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:25,739 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:17:25,739 INFO Predicting labels for 741 texts
+2022-12-19 23:17:25,869 INFO Predicting labels for 32 texts
+2022-12-19 23:17:25,992 INFO Predicting labels for 444 texts
+2022-12-19 23:17:27,168 INFO Training Rule Attention Network
+2022-12-19 23:17:27,175 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:17:27,176 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:17:27,181 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:17:27,181 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:17:30,542 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:30,543 INFO Predicting labels for 444 texts
+2022-12-19 23:17:30,763 INFO There are 3/7 active rules
+2022-12-19 23:17:30,763 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:17:30,768 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:17:30,863 INFO DONE, Getting attention scores...
+2022-12-19 23:17:30,925 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:30,925 INFO Predicting labels for 32 texts
+2022-12-19 23:17:31,038 INFO There are 7/7 active rules
+2022-12-19 23:17:31,039 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:17:31,040 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:17:31,066 INFO DONE, Getting attention scores...
+2022-12-19 23:17:31,124 INFO Evaluating teacher dev iter15 on 32 examples
+2022-12-19 23:17:31,129 INFO teacher dev iter15 performance: 78.12
+2022-12-19 23:17:31,129 INFO teacher dev iter15 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:17:31,130 INFO teacher dev iter15 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:17:31,130 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:17:31,130 INFO Predicting labels for 19 texts
+2022-12-19 23:17:31,269 INFO There are 7/7 active rules
+2022-12-19 23:17:31,269 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:17:31,270 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:17:31,310 INFO DONE, Getting attention scores...
+2022-12-19 23:17:31,374 INFO Evaluating teacher test iter15 on 19 examples
+2022-12-19 23:17:31,378 INFO teacher test iter15 performance: 89.47
+2022-12-19 23:17:31,379 INFO teacher test iter15 confusion matrix:
+[[ 5  2]
+ [ 0 12]]
+2022-12-19 23:17:31,379 INFO teacher test iter15 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.71      0.83         7
+           1       0.86      1.00      0.92        12
+
+    accuracy                           0.89        19
+   macro avg       0.93      0.86      0.88        19
+weighted avg       0.91      0.89      0.89        19
+
+2022-12-19 23:17:31,379 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:17:31,382 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:17:31,384 INFO Balancing Pseudo Dataset to keep 676 items...
+2022-12-19 23:17:31,388 INFO PSEUDO-DATASET:
+676 examples
+PSEUDO-LABELS:
+1    338
+0    338
+Name: label, dtype: int64
+2022-12-19 23:17:31,388 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:17:33,296 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:17:34,858 INFO Predicting labels for 32 texts
+2022-12-19 23:17:34,979 INFO Evaluating student dev iter15 on 32 examples
+2022-12-19 23:17:34,983 INFO student dev iter15 performance: 59.38
+2022-12-19 23:17:34,983 INFO student dev iter15 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:17:34,984 INFO student dev iter15 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:17:34,984 INFO Predicting labels for 19 texts
+2022-12-19 23:17:36,123 INFO Evaluating student test iter15 on 19 examples
+2022-12-19 23:17:36,127 INFO student test iter15 performance: 84.21
+2022-12-19 23:17:36,127 INFO student test iter15 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:36,127 INFO student test iter15 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:36,127 INFO Student Dev performance on iter 15: 59.375
+2022-12-19 23:17:36,127 INFO Student Test performance on iter 15: 84.21052631578947
+2022-12-19 23:17:36,127 INFO 
+
+	 *** Starting loop 16 ***
+2022-12-19 23:17:36,128 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:17:36,128 INFO Downsampling 444 data
+2022-12-19 23:17:36,128 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:17:36,128 INFO Getting rule predictions
+2022-12-19 23:17:36,128 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:17:36,129 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:36,129 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:36,130 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:17:36,131 INFO Predicting labels for 741 texts
+2022-12-19 23:17:36,262 INFO Predicting labels for 32 texts
+2022-12-19 23:17:37,402 INFO Predicting labels for 444 texts
+2022-12-19 23:17:37,514 INFO Training Rule Attention Network
+2022-12-19 23:17:37,525 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:17:37,526 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:17:37,530 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:17:37,530 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:17:40,845 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:40,846 INFO Predicting labels for 444 texts
+2022-12-19 23:17:40,956 INFO There are 3/7 active rules
+2022-12-19 23:17:40,957 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:17:40,961 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:17:41,048 INFO DONE, Getting attention scores...
+2022-12-19 23:17:41,108 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:41,109 INFO Predicting labels for 32 texts
+2022-12-19 23:17:41,210 INFO There are 7/7 active rules
+2022-12-19 23:17:41,210 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:17:41,211 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:17:41,236 INFO DONE, Getting attention scores...
+2022-12-19 23:17:41,296 INFO Evaluating teacher dev iter16 on 32 examples
+2022-12-19 23:17:41,301 INFO teacher dev iter16 performance: 78.12
+2022-12-19 23:17:41,301 INFO teacher dev iter16 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:17:41,301 INFO teacher dev iter16 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:17:41,301 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:17:41,301 INFO Predicting labels for 19 texts
+2022-12-19 23:17:41,407 INFO There are 7/7 active rules
+2022-12-19 23:17:41,407 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:17:41,408 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:17:41,432 INFO DONE, Getting attention scores...
+2022-12-19 23:17:41,488 INFO Evaluating teacher test iter16 on 19 examples
+2022-12-19 23:17:41,493 INFO teacher test iter16 performance: 84.21
+2022-12-19 23:17:41,493 INFO teacher test iter16 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:41,494 INFO teacher test iter16 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:41,494 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:17:41,497 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:17:41,498 INFO Balancing Pseudo Dataset to keep 684 items...
+2022-12-19 23:17:41,503 INFO PSEUDO-DATASET:
+684 examples
+PSEUDO-LABELS:
+1    342
+0    342
+Name: label, dtype: int64
+2022-12-19 23:17:41,503 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:17:42,426 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:17:44,044 INFO Predicting labels for 32 texts
+2022-12-19 23:17:44,151 INFO Evaluating student dev iter16 on 32 examples
+2022-12-19 23:17:44,156 INFO student dev iter16 performance: 59.38
+2022-12-19 23:17:44,156 INFO student dev iter16 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:17:44,156 INFO student dev iter16 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:17:44,156 INFO Predicting labels for 19 texts
+2022-12-19 23:17:44,261 INFO Evaluating student test iter16 on 19 examples
+2022-12-19 23:17:44,266 INFO student test iter16 performance: 84.21
+2022-12-19 23:17:44,266 INFO student test iter16 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:44,266 INFO student test iter16 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:44,266 INFO Student Dev performance on iter 16: 59.375
+2022-12-19 23:17:44,266 INFO Student Test performance on iter 16: 84.21052631578947
+2022-12-19 23:17:44,266 INFO 
+
+	 *** Starting loop 17 ***
+2022-12-19 23:17:44,267 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:17:44,267 INFO Downsampling 444 data
+2022-12-19 23:17:44,267 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:17:44,268 INFO Getting rule predictions
+2022-12-19 23:17:44,268 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:17:44,269 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:44,269 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:44,270 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:17:44,270 INFO Predicting labels for 741 texts
+2022-12-19 23:17:44,376 INFO Predicting labels for 32 texts
+2022-12-19 23:17:44,484 INFO Predicting labels for 444 texts
+2022-12-19 23:17:44,591 INFO Training Rule Attention Network
+2022-12-19 23:17:44,599 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:17:44,599 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:17:44,604 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:17:44,604 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:17:47,864 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:47,865 INFO Predicting labels for 444 texts
+2022-12-19 23:17:47,978 INFO There are 3/7 active rules
+2022-12-19 23:17:47,978 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:17:47,983 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:17:48,073 INFO DONE, Getting attention scores...
+2022-12-19 23:17:48,132 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:48,132 INFO Predicting labels for 32 texts
+2022-12-19 23:17:48,237 INFO There are 7/7 active rules
+2022-12-19 23:17:48,238 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:17:48,238 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:17:48,263 INFO DONE, Getting attention scores...
+2022-12-19 23:17:48,319 INFO Evaluating teacher dev iter17 on 32 examples
+2022-12-19 23:17:48,323 INFO teacher dev iter17 performance: 78.12
+2022-12-19 23:17:48,324 INFO teacher dev iter17 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:17:48,324 INFO teacher dev iter17 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:17:48,324 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:17:48,324 INFO Predicting labels for 19 texts
+2022-12-19 23:17:48,435 INFO There are 7/7 active rules
+2022-12-19 23:17:48,435 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:17:48,436 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:17:48,462 INFO DONE, Getting attention scores...
+2022-12-19 23:17:48,517 INFO Evaluating teacher test iter17 on 19 examples
+2022-12-19 23:17:48,521 INFO teacher test iter17 performance: 84.21
+2022-12-19 23:17:48,521 INFO teacher test iter17 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:48,521 INFO teacher test iter17 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:48,522 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:17:48,525 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:17:48,527 INFO Balancing Pseudo Dataset to keep 728 items...
+2022-12-19 23:17:48,531 INFO PSEUDO-DATASET:
+728 examples
+PSEUDO-LABELS:
+1    364
+0    364
+Name: label, dtype: int64
+2022-12-19 23:17:48,532 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:17:51,541 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:17:52,839 INFO Predicting labels for 32 texts
+2022-12-19 23:17:52,964 INFO Evaluating student dev iter17 on 32 examples
+2022-12-19 23:17:52,968 INFO student dev iter17 performance: 59.38
+2022-12-19 23:17:52,968 INFO student dev iter17 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:17:52,968 INFO student dev iter17 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:17:52,968 INFO Predicting labels for 19 texts
+2022-12-19 23:17:53,084 INFO Evaluating student test iter17 on 19 examples
+2022-12-19 23:17:53,089 INFO student test iter17 performance: 84.21
+2022-12-19 23:17:53,089 INFO student test iter17 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:53,089 INFO student test iter17 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:53,090 INFO Student Dev performance on iter 17: 59.375
+2022-12-19 23:17:53,090 INFO Student Test performance on iter 17: 84.21052631578947
+2022-12-19 23:17:53,090 INFO 
+
+	 *** Starting loop 18 ***
+2022-12-19 23:17:53,090 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:17:53,091 INFO Downsampling 444 data
+2022-12-19 23:17:53,091 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:17:53,092 INFO Getting rule predictions
+2022-12-19 23:17:53,092 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:17:53,093 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:53,093 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:53,094 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:17:53,095 INFO Predicting labels for 741 texts
+2022-12-19 23:17:53,271 INFO Predicting labels for 32 texts
+2022-12-19 23:17:53,380 INFO Predicting labels for 444 texts
+2022-12-19 23:17:53,488 INFO Training Rule Attention Network
+2022-12-19 23:17:53,499 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:17:53,499 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:17:53,503 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:17:53,504 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:17:56,897 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:17:56,898 INFO Predicting labels for 444 texts
+2022-12-19 23:17:57,029 INFO There are 3/7 active rules
+2022-12-19 23:17:57,029 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:17:57,034 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:17:57,133 INFO DONE, Getting attention scores...
+2022-12-19 23:17:57,192 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:17:57,193 INFO Predicting labels for 32 texts
+2022-12-19 23:17:57,302 INFO There are 7/7 active rules
+2022-12-19 23:17:57,302 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:17:57,303 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:17:57,328 INFO DONE, Getting attention scores...
+2022-12-19 23:17:57,389 INFO Evaluating teacher dev iter18 on 32 examples
+2022-12-19 23:17:57,393 INFO teacher dev iter18 performance: 78.12
+2022-12-19 23:17:57,394 INFO teacher dev iter18 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:17:57,394 INFO teacher dev iter18 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:17:57,394 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:17:57,394 INFO Predicting labels for 19 texts
+2022-12-19 23:17:57,504 INFO There are 7/7 active rules
+2022-12-19 23:17:57,504 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:17:57,504 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:17:57,529 INFO DONE, Getting attention scores...
+2022-12-19 23:17:57,584 INFO Evaluating teacher test iter18 on 19 examples
+2022-12-19 23:17:57,588 INFO teacher test iter18 performance: 84.21
+2022-12-19 23:17:57,588 INFO teacher test iter18 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:17:57,589 INFO teacher test iter18 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:17:57,589 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:17:57,592 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:17:57,594 INFO Balancing Pseudo Dataset to keep 696 items...
+2022-12-19 23:17:57,598 INFO PSEUDO-DATASET:
+696 examples
+PSEUDO-LABELS:
+1    348
+0    348
+Name: label, dtype: int64
+2022-12-19 23:17:57,598 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:17:59,559 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:18:01,039 INFO Predicting labels for 32 texts
+2022-12-19 23:18:01,147 INFO Evaluating student dev iter18 on 32 examples
+2022-12-19 23:18:01,152 INFO student dev iter18 performance: 59.38
+2022-12-19 23:18:01,152 INFO student dev iter18 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:18:01,152 INFO student dev iter18 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:18:01,152 INFO Predicting labels for 19 texts
+2022-12-19 23:18:01,265 INFO Evaluating student test iter18 on 19 examples
+2022-12-19 23:18:01,270 INFO student test iter18 performance: 84.21
+2022-12-19 23:18:01,270 INFO student test iter18 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:01,270 INFO student test iter18 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:01,270 INFO Student Dev performance on iter 18: 59.375
+2022-12-19 23:18:01,270 INFO Student Test performance on iter 18: 84.21052631578947
+2022-12-19 23:18:01,270 INFO 
+
+	 *** Starting loop 19 ***
+2022-12-19 23:18:01,271 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:18:01,271 INFO Downsampling 444 data
+2022-12-19 23:18:01,271 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:18:01,272 INFO Getting rule predictions
+2022-12-19 23:18:01,272 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:18:01,273 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:01,273 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:01,274 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:18:01,274 INFO Predicting labels for 741 texts
+2022-12-19 23:18:01,379 INFO Predicting labels for 32 texts
+2022-12-19 23:18:01,487 INFO Predicting labels for 444 texts
+2022-12-19 23:18:01,598 INFO Training Rule Attention Network
+2022-12-19 23:18:01,606 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:18:01,606 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:18:01,611 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:18:01,611 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:18:04,563 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:04,564 INFO Predicting labels for 444 texts
+2022-12-19 23:18:04,672 INFO There are 3/7 active rules
+2022-12-19 23:18:04,673 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:18:04,677 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:18:04,765 INFO DONE, Getting attention scores...
+2022-12-19 23:18:04,830 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:04,830 INFO Predicting labels for 32 texts
+2022-12-19 23:18:04,967 INFO There are 7/7 active rules
+2022-12-19 23:18:04,968 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:18:04,969 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:18:04,994 INFO DONE, Getting attention scores...
+2022-12-19 23:18:05,051 INFO Evaluating teacher dev iter19 on 32 examples
+2022-12-19 23:18:05,056 INFO teacher dev iter19 performance: 78.12
+2022-12-19 23:18:05,056 INFO teacher dev iter19 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:18:05,056 INFO teacher dev iter19 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:18:05,056 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:18:05,056 INFO Predicting labels for 19 texts
+2022-12-19 23:18:05,165 INFO There are 7/7 active rules
+2022-12-19 23:18:05,166 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:18:05,166 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:18:05,190 INFO DONE, Getting attention scores...
+2022-12-19 23:18:05,245 INFO Evaluating teacher test iter19 on 19 examples
+2022-12-19 23:18:05,249 INFO teacher test iter19 performance: 84.21
+2022-12-19 23:18:05,250 INFO teacher test iter19 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:05,250 INFO teacher test iter19 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:05,250 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:18:05,252 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:18:05,254 INFO Balancing Pseudo Dataset to keep 672 items...
+2022-12-19 23:18:05,257 INFO PSEUDO-DATASET:
+672 examples
+PSEUDO-LABELS:
+1    336
+0    336
+Name: label, dtype: int64
+2022-12-19 23:18:05,257 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:18:05,993 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:18:09,348 INFO Predicting labels for 32 texts
+2022-12-19 23:18:09,454 INFO Evaluating student dev iter19 on 32 examples
+2022-12-19 23:18:09,458 INFO student dev iter19 performance: 59.38
+2022-12-19 23:18:09,458 INFO student dev iter19 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:18:09,459 INFO student dev iter19 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:18:09,459 INFO Predicting labels for 19 texts
+2022-12-19 23:18:09,563 INFO Evaluating student test iter19 on 19 examples
+2022-12-19 23:18:09,567 INFO student test iter19 performance: 84.21
+2022-12-19 23:18:09,567 INFO student test iter19 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:09,567 INFO student test iter19 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:09,567 INFO Student Dev performance on iter 19: 59.375
+2022-12-19 23:18:09,567 INFO Student Test performance on iter 19: 84.21052631578947
+2022-12-19 23:18:09,568 INFO 
+
+	 *** Starting loop 20 ***
+2022-12-19 23:18:09,568 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:18:09,568 INFO Downsampling 444 data
+2022-12-19 23:18:09,568 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:18:09,568 INFO Getting rule predictions
+2022-12-19 23:18:09,568 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:18:09,569 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:09,570 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:09,570 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:18:09,571 INFO Predicting labels for 741 texts
+2022-12-19 23:18:09,679 INFO Predicting labels for 32 texts
+2022-12-19 23:18:09,783 INFO Predicting labels for 444 texts
+2022-12-19 23:18:09,894 INFO Training Rule Attention Network
+2022-12-19 23:18:10,011 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:18:10,012 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:18:10,017 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:18:10,017 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:18:13,111 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:13,113 INFO Predicting labels for 444 texts
+2022-12-19 23:18:13,222 INFO There are 3/7 active rules
+2022-12-19 23:18:13,222 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:18:13,227 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:18:13,312 INFO DONE, Getting attention scores...
+2022-12-19 23:18:13,379 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:13,379 INFO Predicting labels for 32 texts
+2022-12-19 23:18:13,491 INFO There are 7/7 active rules
+2022-12-19 23:18:13,492 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:18:13,493 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:18:13,517 INFO DONE, Getting attention scores...
+2022-12-19 23:18:13,575 INFO Evaluating teacher dev iter20 on 32 examples
+2022-12-19 23:18:13,580 INFO teacher dev iter20 performance: 78.12
+2022-12-19 23:18:13,580 INFO teacher dev iter20 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:18:13,580 INFO teacher dev iter20 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:18:13,580 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:18:13,581 INFO Predicting labels for 19 texts
+2022-12-19 23:18:13,688 INFO There are 7/7 active rules
+2022-12-19 23:18:13,689 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:18:13,689 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:18:13,713 INFO DONE, Getting attention scores...
+2022-12-19 23:18:13,775 INFO Evaluating teacher test iter20 on 19 examples
+2022-12-19 23:18:13,779 INFO teacher test iter20 performance: 84.21
+2022-12-19 23:18:13,780 INFO teacher test iter20 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:13,780 INFO teacher test iter20 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:13,780 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:18:13,783 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:18:13,785 INFO Balancing Pseudo Dataset to keep 742 items...
+2022-12-19 23:18:13,789 INFO PSEUDO-DATASET:
+742 examples
+PSEUDO-LABELS:
+1    371
+0    371
+Name: label, dtype: int64
+2022-12-19 23:18:13,789 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:18:14,622 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:18:16,101 INFO Predicting labels for 32 texts
+2022-12-19 23:18:16,212 INFO Evaluating student dev iter20 on 32 examples
+2022-12-19 23:18:16,217 INFO student dev iter20 performance: 59.38
+2022-12-19 23:18:16,217 INFO student dev iter20 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:18:16,217 INFO student dev iter20 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:18:16,217 INFO Predicting labels for 19 texts
+2022-12-19 23:18:16,321 INFO Evaluating student test iter20 on 19 examples
+2022-12-19 23:18:16,325 INFO student test iter20 performance: 84.21
+2022-12-19 23:18:16,325 INFO student test iter20 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:16,326 INFO student test iter20 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:16,326 INFO Student Dev performance on iter 20: 59.375
+2022-12-19 23:18:16,326 INFO Student Test performance on iter 20: 84.21052631578947
+2022-12-19 23:18:16,326 INFO 
+
+	 *** Starting loop 21 ***
+2022-12-19 23:18:16,326 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:18:16,326 INFO Downsampling 444 data
+2022-12-19 23:18:16,327 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:18:16,327 INFO Getting rule predictions
+2022-12-19 23:18:16,327 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:18:16,328 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:16,328 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:16,329 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:18:16,330 INFO Predicting labels for 741 texts
+2022-12-19 23:18:16,436 INFO Predicting labels for 32 texts
+2022-12-19 23:18:16,541 INFO Predicting labels for 444 texts
+2022-12-19 23:18:16,647 INFO Training Rule Attention Network
+2022-12-19 23:18:16,658 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:18:16,659 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:18:16,663 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:18:16,663 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:18:19,866 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:19,868 INFO Predicting labels for 444 texts
+2022-12-19 23:18:19,974 INFO There are 3/7 active rules
+2022-12-19 23:18:19,974 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:18:19,982 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:18:20,073 INFO DONE, Getting attention scores...
+2022-12-19 23:18:20,132 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:20,132 INFO Predicting labels for 32 texts
+2022-12-19 23:18:20,235 INFO There are 7/7 active rules
+2022-12-19 23:18:20,236 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:18:20,237 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:18:20,266 INFO DONE, Getting attention scores...
+2022-12-19 23:18:20,322 INFO Evaluating teacher dev iter21 on 32 examples
+2022-12-19 23:18:20,326 INFO teacher dev iter21 performance: 78.12
+2022-12-19 23:18:20,327 INFO teacher dev iter21 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:18:20,327 INFO teacher dev iter21 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:18:20,327 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:18:20,327 INFO Predicting labels for 19 texts
+2022-12-19 23:18:20,431 INFO There are 7/7 active rules
+2022-12-19 23:18:20,431 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:18:20,432 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:18:20,456 INFO DONE, Getting attention scores...
+2022-12-19 23:18:20,516 INFO Evaluating teacher test iter21 on 19 examples
+2022-12-19 23:18:20,521 INFO teacher test iter21 performance: 84.21
+2022-12-19 23:18:20,522 INFO teacher test iter21 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:20,522 INFO teacher test iter21 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:20,522 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:18:20,525 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:18:20,527 INFO Balancing Pseudo Dataset to keep 708 items...
+2022-12-19 23:18:20,531 INFO PSEUDO-DATASET:
+708 examples
+PSEUDO-LABELS:
+1    354
+0    354
+Name: label, dtype: int64
+2022-12-19 23:18:20,531 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:18:23,396 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:18:27,794 INFO Predicting labels for 32 texts
+2022-12-19 23:18:27,901 INFO Evaluating student dev iter21 on 32 examples
+2022-12-19 23:18:27,905 INFO student dev iter21 performance: 59.38
+2022-12-19 23:18:27,906 INFO student dev iter21 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:18:27,906 INFO student dev iter21 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:18:27,906 INFO Predicting labels for 19 texts
+2022-12-19 23:18:28,014 INFO Evaluating student test iter21 on 19 examples
+2022-12-19 23:18:28,018 INFO student test iter21 performance: 84.21
+2022-12-19 23:18:28,018 INFO student test iter21 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:28,018 INFO student test iter21 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:28,019 INFO Student Dev performance on iter 21: 59.375
+2022-12-19 23:18:28,019 INFO Student Test performance on iter 21: 84.21052631578947
+2022-12-19 23:18:28,019 INFO 
+
+	 *** Starting loop 22 ***
+2022-12-19 23:18:28,019 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:18:28,019 INFO Downsampling 444 data
+2022-12-19 23:18:28,019 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:18:28,019 INFO Getting rule predictions
+2022-12-19 23:18:28,019 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:18:28,020 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:28,021 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:28,021 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:18:28,022 INFO Predicting labels for 741 texts
+2022-12-19 23:18:28,131 INFO Predicting labels for 32 texts
+2022-12-19 23:18:28,238 INFO Predicting labels for 444 texts
+2022-12-19 23:18:28,341 INFO Training Rule Attention Network
+2022-12-19 23:18:28,349 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:18:28,350 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:18:28,356 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:18:28,356 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:18:31,545 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:31,546 INFO Predicting labels for 444 texts
+2022-12-19 23:18:31,653 INFO There are 3/7 active rules
+2022-12-19 23:18:31,653 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:18:31,658 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:18:31,748 INFO DONE, Getting attention scores...
+2022-12-19 23:18:31,805 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:31,806 INFO Predicting labels for 32 texts
+2022-12-19 23:18:32,931 INFO There are 7/7 active rules
+2022-12-19 23:18:32,931 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:18:32,932 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:18:32,956 INFO DONE, Getting attention scores...
+2022-12-19 23:18:33,016 INFO Evaluating teacher dev iter22 on 32 examples
+2022-12-19 23:18:33,020 INFO teacher dev iter22 performance: 78.12
+2022-12-19 23:18:33,021 INFO teacher dev iter22 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:18:33,021 INFO teacher dev iter22 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:18:33,021 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:18:33,021 INFO Predicting labels for 19 texts
+2022-12-19 23:18:33,125 INFO There are 7/7 active rules
+2022-12-19 23:18:33,125 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:18:33,126 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:18:33,152 INFO DONE, Getting attention scores...
+2022-12-19 23:18:33,206 INFO Evaluating teacher test iter22 on 19 examples
+2022-12-19 23:18:33,210 INFO teacher test iter22 performance: 84.21
+2022-12-19 23:18:33,210 INFO teacher test iter22 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:33,210 INFO teacher test iter22 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:33,210 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:18:33,213 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:18:33,214 INFO Balancing Pseudo Dataset to keep 692 items...
+2022-12-19 23:18:33,218 INFO PSEUDO-DATASET:
+692 examples
+PSEUDO-LABELS:
+1    346
+0    346
+Name: label, dtype: int64
+2022-12-19 23:18:33,218 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:18:34,040 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:18:36,380 INFO Predicting labels for 32 texts
+2022-12-19 23:18:36,488 INFO Evaluating student dev iter22 on 32 examples
+2022-12-19 23:18:36,493 INFO student dev iter22 performance: 59.38
+2022-12-19 23:18:36,494 INFO student dev iter22 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:18:36,494 INFO student dev iter22 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:18:36,494 INFO Predicting labels for 19 texts
+2022-12-19 23:18:36,601 INFO Evaluating student test iter22 on 19 examples
+2022-12-19 23:18:36,606 INFO student test iter22 performance: 84.21
+2022-12-19 23:18:36,606 INFO student test iter22 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:36,606 INFO student test iter22 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:36,606 INFO Student Dev performance on iter 22: 59.375
+2022-12-19 23:18:36,607 INFO Student Test performance on iter 22: 84.21052631578947
+2022-12-19 23:18:36,607 INFO 
+
+	 *** Starting loop 23 ***
+2022-12-19 23:18:36,607 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:18:36,607 INFO Downsampling 444 data
+2022-12-19 23:18:36,608 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:18:36,608 INFO Getting rule predictions
+2022-12-19 23:18:36,608 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:18:36,609 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:36,609 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:36,610 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:18:36,611 INFO Predicting labels for 741 texts
+2022-12-19 23:18:36,717 INFO Predicting labels for 32 texts
+2022-12-19 23:18:36,820 INFO Predicting labels for 444 texts
+2022-12-19 23:18:36,922 INFO Training Rule Attention Network
+2022-12-19 23:18:36,930 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:18:36,931 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:18:36,935 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:18:36,935 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:18:39,887 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:39,888 INFO Predicting labels for 444 texts
+2022-12-19 23:18:39,994 INFO There are 3/7 active rules
+2022-12-19 23:18:39,994 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:18:39,999 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:18:40,087 INFO DONE, Getting attention scores...
+2022-12-19 23:18:40,255 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:40,255 INFO Predicting labels for 32 texts
+2022-12-19 23:18:40,360 INFO There are 7/7 active rules
+2022-12-19 23:18:40,360 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:18:40,361 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:18:40,387 INFO DONE, Getting attention scores...
+2022-12-19 23:18:40,444 INFO Evaluating teacher dev iter23 on 32 examples
+2022-12-19 23:18:40,449 INFO teacher dev iter23 performance: 78.12
+2022-12-19 23:18:40,449 INFO teacher dev iter23 confusion matrix:
+[[ 8  6]
+ [ 1 17]]
+2022-12-19 23:18:40,449 INFO teacher dev iter23 report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.57      0.70        14
+           1       0.74      0.94      0.83        18
+
+    accuracy                           0.78        32
+   macro avg       0.81      0.76      0.76        32
+weighted avg       0.80      0.78      0.77        32
+
+2022-12-19 23:18:40,449 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:18:40,450 INFO Predicting labels for 19 texts
+2022-12-19 23:18:40,572 INFO There are 7/7 active rules
+2022-12-19 23:18:40,573 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:18:40,573 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:18:40,598 INFO DONE, Getting attention scores...
+2022-12-19 23:18:40,657 INFO Evaluating teacher test iter23 on 19 examples
+2022-12-19 23:18:40,661 INFO teacher test iter23 performance: 84.21
+2022-12-19 23:18:40,662 INFO teacher test iter23 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:40,662 INFO teacher test iter23 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:40,662 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:18:40,665 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:18:40,667 INFO Balancing Pseudo Dataset to keep 706 items...
+2022-12-19 23:18:40,671 INFO PSEUDO-DATASET:
+706 examples
+PSEUDO-LABELS:
+1    353
+0    353
+Name: label, dtype: int64
+2022-12-19 23:18:40,671 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:18:41,498 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:18:44,848 INFO Predicting labels for 32 texts
+2022-12-19 23:18:44,956 INFO Evaluating student dev iter23 on 32 examples
+2022-12-19 23:18:44,960 INFO student dev iter23 performance: 59.38
+2022-12-19 23:18:44,961 INFO student dev iter23 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:18:44,961 INFO student dev iter23 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:18:44,961 INFO Predicting labels for 19 texts
+2022-12-19 23:18:45,071 INFO Evaluating student test iter23 on 19 examples
+2022-12-19 23:18:45,075 INFO student test iter23 performance: 84.21
+2022-12-19 23:18:45,076 INFO student test iter23 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:45,076 INFO student test iter23 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:45,076 INFO Student Dev performance on iter 23: 59.375
+2022-12-19 23:18:45,076 INFO Student Test performance on iter 23: 84.21052631578947
+2022-12-19 23:18:45,076 INFO 
+
+	 *** Starting loop 24 ***
+2022-12-19 23:18:45,076 INFO [WARNING] sample size = 16384 > 444
+2022-12-19 23:18:45,076 INFO Downsampling 444 data
+2022-12-19 23:18:45,077 INFO Adding Student as extra rule in Teacher
+2022-12-19 23:18:45,077 INFO Getting rule predictions
+2022-12-19 23:18:45,077 INFO Applying Teacher with 7 LF(s) on 741 data
+2022-12-19 23:18:45,078 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:45,078 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:45,078 INFO Getting student predictions on train (and dev) dataset
+2022-12-19 23:18:45,079 INFO Predicting labels for 741 texts
+2022-12-19 23:18:45,186 INFO Predicting labels for 32 texts
+2022-12-19 23:18:45,291 INFO Predicting labels for 444 texts
+2022-12-19 23:18:45,400 INFO Training Rule Attention Network
+2022-12-19 23:18:45,408 INFO X Train Shape (741, 7) (741, 8, 2) (741,)
+2022-12-19 23:18:45,408 INFO X Dev Shape (32, 7) (32, 8, 2) (32,)
+2022-12-19 23:18:45,413 INFO X Unsup Shape (444, 7) (444, 8, 2)
+2022-12-19 23:18:45,413 INFO 
+
+		*** Training RAN ***
+2022-12-19 23:18:48,417 INFO Applying Teacher with 7 LF(s) on 444 data
+2022-12-19 23:18:48,418 INFO Predicting labels for 444 texts
+2022-12-19 23:18:48,540 INFO There are 3/7 active rules
+2022-12-19 23:18:48,540 INFO Coverage: 100.0% (444/444)
+2022-12-19 23:18:48,544 INFO RAN - Predicting labels for 444 texts
+2022-12-19 23:18:48,629 INFO DONE, Getting attention scores...
+2022-12-19 23:18:48,691 INFO Applying Teacher with 7 LF(s) on 32 data
+2022-12-19 23:18:48,691 INFO Predicting labels for 32 texts
+2022-12-19 23:18:48,804 INFO There are 7/7 active rules
+2022-12-19 23:18:48,804 INFO Coverage: 100.0% (32/32)
+2022-12-19 23:18:48,805 INFO RAN - Predicting labels for 32 texts
+2022-12-19 23:18:48,829 INFO DONE, Getting attention scores...
+2022-12-19 23:18:48,884 INFO Evaluating teacher dev iter24 on 32 examples
+2022-12-19 23:18:48,888 INFO teacher dev iter24 performance: 78.12
+2022-12-19 23:18:48,889 INFO teacher dev iter24 confusion matrix:
+[[ 9  5]
+ [ 2 16]]
+2022-12-19 23:18:48,889 INFO teacher dev iter24 report:
+              precision    recall  f1-score   support
+
+           0       0.82      0.64      0.72        14
+           1       0.76      0.89      0.82        18
+
+    accuracy                           0.78        32
+   macro avg       0.79      0.77      0.77        32
+weighted avg       0.79      0.78      0.78        32
+
+2022-12-19 23:18:48,889 INFO Applying Teacher with 7 LF(s) on 19 data
+2022-12-19 23:18:48,889 INFO Predicting labels for 19 texts
+2022-12-19 23:18:49,000 INFO There are 7/7 active rules
+2022-12-19 23:18:49,000 INFO Coverage: 100.0% (19/19)
+2022-12-19 23:18:49,001 INFO RAN - Predicting labels for 19 texts
+2022-12-19 23:18:49,024 INFO DONE, Getting attention scores...
+2022-12-19 23:18:49,079 INFO Evaluating teacher test iter24 on 19 examples
+2022-12-19 23:18:49,084 INFO teacher test iter24 performance: 84.21
+2022-12-19 23:18:49,084 INFO teacher test iter24 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:49,084 INFO teacher test iter24 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:49,084 INFO Saving attention scores at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_dump
+2022-12-19 23:18:49,087 INFO Creating Pseudo Dataset with 444 items...
+2022-12-19 23:18:49,089 INFO Balancing Pseudo Dataset to keep 704 items...
+2022-12-19 23:18:49,094 INFO PSEUDO-DATASET:
+704 examples
+PSEUDO-LABELS:
+1    352
+0    352
+Name: label, dtype: int64
+2022-12-19 23:18:49,094 INFO training student on pseudo-labeled instances provided by the teacher
+2022-12-19 23:18:50,966 INFO fine-tuning the student on clean labeled data
+2022-12-19 23:18:53,305 INFO Predicting labels for 32 texts
+2022-12-19 23:18:54,442 INFO Evaluating student dev iter24 on 32 examples
+2022-12-19 23:18:54,447 INFO student dev iter24 performance: 59.38
+2022-12-19 23:18:54,447 INFO student dev iter24 confusion matrix:
+[[ 1 13]
+ [ 0 18]]
+2022-12-19 23:18:54,447 INFO student dev iter24 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.07      0.13        14
+           1       0.58      1.00      0.73        18
+
+    accuracy                           0.59        32
+   macro avg       0.79      0.54      0.43        32
+weighted avg       0.76      0.59      0.47        32
+
+2022-12-19 23:18:54,447 INFO Predicting labels for 19 texts
+2022-12-19 23:18:54,553 INFO Evaluating student test iter24 on 19 examples
+2022-12-19 23:18:54,557 INFO student test iter24 performance: 84.21
+2022-12-19 23:18:54,557 INFO student test iter24 confusion matrix:
+[[ 4  3]
+ [ 0 12]]
+2022-12-19 23:18:54,558 INFO student test iter24 report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.57      0.73         7
+           1       0.80      1.00      0.89        12
+
+    accuracy                           0.84        19
+   macro avg       0.90      0.79      0.81        19
+weighted avg       0.87      0.84      0.83        19
+
+2022-12-19 23:18:54,558 INFO Student Dev performance on iter 24: 59.375
+2022-12-19 23:18:54,558 INFO Student Test performance on iter 24: 84.21052631578947
+2022-12-19 23:18:54,558 INFO Final Results
+2022-12-19 23:18:54,558 INFO TEACHER PERFORMANCES:
+0:	78.12	89.47
+1:	78.12	84.21
+2:	78.12	84.21
+3:	78.12	84.21
+4:	78.12	84.21
+5:	78.12	84.21
+6:	78.12	84.21
+7:	78.12	84.21
+8:	78.12	84.21
+9:	78.12	84.21
+10:	78.12	84.21
+11:	78.12	84.21
+12:	78.12	84.21
+13:	78.12	84.21
+14:	78.12	84.21
+15:	78.12	84.21
+16:	78.12	89.47
+17:	78.12	84.21
+18:	78.12	84.21
+19:	78.12	84.21
+20:	78.12	84.21
+21:	78.12	84.21
+22:	78.12	84.21
+23:	78.12	84.21
+24:	78.12	84.21
+25:	78.12	84.21
+2022-12-19 23:18:54,558 INFO STUDENT PERFORMANCES:
+0:	34.38	31.58
+1:	56.25	68.42
+2:	59.38	73.68
+3:	59.38	78.95
+4:	56.25	84.21
+5:	56.25	84.21
+6:	59.38	84.21
+7:	59.38	84.21
+8:	59.38	84.21
+9:	59.38	84.21
+10:	59.38	84.21
+11:	59.38	84.21
+12:	59.38	84.21
+13:	59.38	84.21
+14:	59.38	84.21
+15:	59.38	84.21
+16:	59.38	84.21
+17:	59.38	84.21
+18:	59.38	84.21
+19:	59.38	84.21
+20:	59.38	84.21
+21:	59.38	84.21
+22:	59.38	84.21
+23:	59.38	84.21
+24:	59.38	84.21
+25:	59.38	84.21
+2022-12-19 23:18:54,558 INFO BEST DEV weighted_acc = 59.375 for epoch 25
+2022-12-19 23:18:54,558 INFO FINAL TEST weighted_acc = 84.211 for epoch 25 (max=84.21 for epoch 25)
+2022-12-19 23:18:54,558 INFO Saving student_last to ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/student_last
+2022-12-19 23:18:54,558 INFO Saving model at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/student_last/final_model.h5
+2022-12-19 23:18:54,566 INFO Saving teacher at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_last
+2022-12-19 23:18:54,566 INFO Saving rule attention network at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/teacher_last/rule_attention_network.h5
+2022-12-19 23:18:54,574 INFO 	*** Final Results ***
+2022-12-19 23:18:54,574 INFO 
+student_train:	{'dev_loss': 0.7800894975662231}
+2022-12-19 23:18:54,574 INFO 
+supervised_student_dev:	{'acc': 34.375, 'weighted_acc': 34.375, 'prec': 27.294685990338163, 'rec': 31.349206349206348, 'f1': 28.73806998939554, 'weighted_f1': 28.73806998939554, 'ignored': 0, 'total': 32, 'perf': 34.375}
+2022-12-19 23:18:54,574 INFO 
+supervised_student_test:	{'acc': 31.57894736842105, 'weighted_acc': 31.57894736842105, 'prec': 33.92857142857143, 'rec': 33.92857142857143, 'f1': 31.57894736842105, 'weighted_f1': 31.57894736842105, 'ignored': 0, 'total': 19, 'perf': 31.57894736842105}
+2022-12-19 23:18:54,575 INFO 
+teacher_train:	{'acc': 90.68825910931174, 'weighted_acc': 90.68825910931174, 'prec': 89.1351943076081, 'rec': 86.26373626373626, 'f1': 87.55067604584401, 'weighted_f1': 87.55067604584401, 'ignored': 0, 'total': 741, 'perf': 90.68825910931174}
+2022-12-19 23:18:54,575 INFO 
+teacher_dev:	{'acc': 78.125, 'weighted_acc': 78.125, 'prec': 79.00432900432901, 'rec': 76.58730158730158, 'f1': 77.02564102564102, 'weighted_f1': 77.02564102564102, 'ignored': 0, 'total': 32, 'perf': 78.125}
+2022-12-19 23:18:54,575 INFO 
+teacher_test:	{'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}
+2022-12-19 23:18:54,575 INFO 
+teacher_train_iter:	[{'acc': 90.68825910931174, 'weighted_acc': 90.68825910931174, 'prec': 89.1351943076081, 'rec': 86.26373626373626, 'f1': 87.55067604584401, 'weighted_f1': 87.55067604584401, 'ignored': 0, 'total': 741, 'perf': 90.68825910931174}]
+2022-12-19 23:18:54,575 INFO 
+teacher_dev_iter:	[{'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 81.40096618357488, 'rec': 75.79365079365078, 'f1': 76.24602332979852, 'weighted_f1': 76.24602332979852, 'ignored': 0, 'total': 32, 'perf': 78.125}, {'acc': 78.125, 'weighted_acc': 78.125, 'prec': 79.00432900432901, 'rec': 76.58730158730158, 'f1': 77.02564102564102, 'weighted_f1': 77.02564102564102, 'ignored': 0, 'total': 32, 'perf': 78.125}]
+2022-12-19 23:18:54,576 INFO 
+teacher_test_iter:	[{'acc': 89.47368421052632, 'weighted_acc': 89.47368421052632, 'prec': 92.85714285714286, 'rec': 85.71428571428572, 'f1': 87.82051282051282, 'weighted_f1': 87.82051282051282, 'ignored': 0, 'total': 19, 'perf': 89.47368421052632}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 89.47368421052632, 'weighted_acc': 89.47368421052632, 'prec': 92.85714285714286, 'rec': 85.71428571428572, 'f1': 87.82051282051282, 'weighted_f1': 87.82051282051282, 'ignored': 0, 'total': 19, 'perf': 89.47368421052632}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}]
+2022-12-19 23:18:54,576 INFO 
+student_train_iter:	[{'dev_loss': 0.7800894975662231}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+2022-12-19 23:18:54,577 INFO 
+student_dev_iter:	[{'acc': 34.375, 'weighted_acc': 34.375, 'prec': 27.294685990338163, 'rec': 31.349206349206348, 'f1': 28.73806998939554, 'weighted_f1': 28.73806998939554, 'ignored': 0, 'total': 32, 'perf': 34.375}, {'acc': 56.25, 'weighted_acc': 56.25, 'prec': 28.125, 'rec': 50.0, 'f1': 36.0, 'weighted_f1': 36.0, 'ignored': 0, 'total': 32, 'perf': 56.25}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 56.25, 'weighted_acc': 56.25, 'prec': 53.333333333333336, 'rec': 50.79365079365079, 'f1': 41.66666666666667, 'weighted_f1': 41.66666666666667, 'ignored': 0, 'total': 32, 'perf': 56.25}, {'acc': 56.25, 'weighted_acc': 56.25, 'prec': 53.333333333333336, 'rec': 50.79365079365079, 'f1': 41.66666666666667, 'weighted_f1': 41.66666666666667, 'ignored': 0, 'total': 32, 'perf': 56.25}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}, {'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}]
+2022-12-19 23:18:54,577 INFO 
+student_test_iter:	[{'acc': 31.57894736842105, 'weighted_acc': 31.57894736842105, 'prec': 33.92857142857143, 'rec': 33.92857142857143, 'f1': 31.57894736842105, 'weighted_f1': 31.57894736842105, 'ignored': 0, 'total': 19, 'perf': 31.57894736842105}, {'acc': 68.42105263157895, 'weighted_acc': 68.42105263157895, 'prec': 67.70833333333333, 'rec': 60.11904761904761, 'f1': 59.285714285714285, 'weighted_f1': 59.285714285714285, 'ignored': 0, 'total': 19, 'perf': 68.42105263157895}, {'acc': 73.68421052631578, 'weighted_acc': 73.68421052631578, 'prec': 74.16666666666667, 'rec': 67.26190476190476, 'f1': 68.01346801346801, 'weighted_f1': 68.01346801346801, 'ignored': 0, 'total': 19, 'perf': 73.68421052631578}, {'acc': 78.94736842105263, 'weighted_acc': 78.94736842105263, 'prec': 87.5, 'rec': 71.42857142857143, 'f1': 72.85714285714285, 'weighted_f1': 72.85714285714285, 'ignored': 0, 'total': 19, 'perf': 78.94736842105263}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}, {'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}]
+2022-12-19 23:18:54,578 INFO 
+student_dev:	{'acc': 59.375, 'weighted_acc': 59.375, 'prec': 79.03225806451613, 'rec': 53.57142857142857, 'f1': 43.40136054421769, 'weighted_f1': 43.40136054421769, 'ignored': 0, 'total': 32, 'perf': 59.375}
+2022-12-19 23:18:54,578 INFO 
+student_test:	{'acc': 84.21052631578947, 'weighted_acc': 84.21052631578947, 'prec': 90.0, 'rec': 78.57142857142857, 'f1': 80.80808080808082, 'weighted_f1': 80.80808080808082, 'ignored': 0, 'total': 19, 'perf': 84.21052631578947}
+2022-12-19 23:18:54,578 INFO Saving results at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/results.pkl
+2022-12-19 23:18:54,602 INFO Dataset: econ
+2022-12-19 23:18:54,602 INFO Weak Sources: ['econrules']
+2022-12-19 23:18:54,602 INFO Model: bert
+
+2022-12-19 23:18:54,602 INFO Teacher Train weighted_acc: 90.7
+2022-12-19 23:18:54,602 INFO Teacher Dev weighted_acc: 78.1
+2022-12-19 23:18:54,602 INFO Teacher Test weighted_acc: 84.2
+
+2022-12-19 23:18:54,602 INFO Student Dev weighted_acc: 59.4
+2022-12-19 23:18:54,602 INFO Student Test weighted_acc: 84.2
+2022-12-19 23:18:54,604 INFO Saved report at ../experiments/econ/Dec19_23-14_ECON_experiments/seed0/2022_12_19-23_14_stBERT/results.txt

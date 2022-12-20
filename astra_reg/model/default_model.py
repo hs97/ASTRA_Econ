@@ -1,6 +1,7 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
 
 import os
@@ -255,7 +256,7 @@ def create_learning_rate_scheduler(max_learn_rate=5e-5,
 
 def construct_model(max_seq_length, num_labels, dense_dropout=0.5, dataset='trec'):
     # Constructing default model architectures for equal comparison with previous approaches
-    if dataset == 'econ_reg':
+    if dataset.startswith('econ'):
         emb_size = 7
         hidden_size = 64
         num_layers = 4

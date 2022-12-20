@@ -1,6 +1,7 @@
 """
-Code for self-training with weak supervision.
-Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Code for self-training with weak supervision for regression analysis.
+Original Author: Giannis Karamanolakis (gkaraman@cs.columbia.edu)
+Modified by: Haoyu Sheng (haoyu_sheng@brown.edu)
 """
 
 import math
@@ -46,6 +47,7 @@ class RAN:
         self.xdim = -1
         self.ignore_student = False
         self.gpus = 1
+        self.default = 2
         
     def init(self, rule_pred):
         # Initialize RAN as majority voting (all sources have equal weights)
@@ -89,6 +91,7 @@ class RAN:
         if x_train is not None:
             x_train = np.array(x_train)
             y_train = np.array(y_train)
+            self.default = np.mean(y_train)
             rule_one_hot_train, fired_rule_ids_train, rule_pred_train = self.postprocess_rule_preds(rule_pred_train, student_pred_train)
             self.logger.info("X Train Shape " + str(x_train.shape) + ' ' + str(rule_pred_train.shape) + ' ' + str(y_train.shape))
         else:
@@ -118,24 +121,6 @@ class RAN:
                                                 seed=self.manual_seed)
         
         self.logger.info("\n\n\t\t*** Training RAN ***")
-        loss_fn = MinEntropyLoss(batch_size=self.unsup_batch_size * self.gpus)  # SSLLoss()
-        self.model.compile(optimizer=tf.keras.optimizers.Adam(),
-                           loss=loss_fn,
-                           metrics=[tf.keras.metrics.MeanSquaredError()])
-        '''
-        self.model.fit(
-            x=[x_unsup, fired_rule_ids_unsup, rule_pred_unsup],
-            y=np.array([-999] * x_unsup.shape[0]),
-            batch_size=self.unsup_batch_size * self.gpus,
-            shuffle=True,
-            epochs=self.sup_epochs,
-            callbacks=[
-                create_learning_rate_scheduler(max_learn_rate=1e-2, end_learn_rate=1e-5, warmup_epoch_count=20,
-                                               total_epoch_count=self.sup_epochs),
-                K.callbacks.EarlyStopping(patience=20, restore_best_weights=True)
-            ],
-            validation_data=([x_dev, fired_rule_ids_dev, rule_pred_dev], y_dev))
-        '''
         # TODO: this is the component that needs to be changed into some regression measures
         loss_fn = tf.keras.losses.MeanSquaredError() 
         self.model.compile(optimizer=tf.keras.optimizers.Adam(),
@@ -203,9 +188,6 @@ class RAN:
             batch_size=batch_size)
         self.logger.info('the attention scores are')
         self.logger.info(att_scores)
-        self.logger.info(rule_pred_one_hot)
-        self.logger.info(fired_rule_ids)
-        self.logger.info(y_pred)
         preds = y_pred.flatten()
         return {
             'preds': preds,
@@ -256,29 +238,16 @@ def construct_rule_network(student_emb_dim, num_rules, num_labels, dense_dropout
     # Compute attention scores
     att_scores = tf.keras.layers.Dot(axes=[1, 2])([x_hidden, rule_embeddings])
     att_scores = tf.keras.layers.Add()([att_scores, tf.keras.backend.squeeze(rule_biases, axis=-1)])
-    att_sigmoid_proba = Lambda(lambda x: x, name='attention')(att_scores)
+    att_sigmoid_proba = Lambda(lambda x: tf.keras.activations.sigmoid(x), name='attention')(att_scores)
     rule_mask = tf.keras.backend.cast(rule_preds_onehot != -999, 'float32')
 
     outputs = tf.keras.layers.Dot(axes=[1, 1], name='raw_outputs')([att_sigmoid_proba, tf.math.multiply(rule_preds_onehot, rule_mask)])
-    #outputs = Lambda(lambda x: normalize_with_random_rule(x[0], x[1], x[2]), name='outputs_with_uniform')((outputs, att_sigmoid_proba, rule_preds_onehot))
-
-    # Normalize Outputs
-    #outputs = Lambda(lambda x: l1_normalize(x, num_labels), name='normalized_outputs')(outputs)
+    outputs = Lambda(lambda x: normalize_with_random_rule(x[0], x[1], x[2]), name='outputs_with_uniform')((outputs, att_sigmoid_proba, rule_preds_onehot))
 
     # Build Model
     model = tf.keras.Model(inputs=[student_embeddings, rule_ids, rule_preds_onehot], outputs=outputs)
     print(model.summary())
     return model
-
-
-def MinEntropyLoss(batch_size):
-    # TODO: I think this loss is the one for pseudo-labels. No modifications should be needed
-    def loss(y_true, y_prob):
-        #y_prob = y_prob[y_prob != -999]
-        per_example_loss = -y_prob * tf.math.log(y_prob)
-        return tf.nn.compute_average_loss(per_example_loss, global_batch_size=batch_size)
-    return loss
-
 
 class MajorityVoter:
     """
@@ -351,8 +320,9 @@ def normalize_with_random_rule(output, att_sigmoid_proba, rule_preds_onehot):
     rule_mask = tf.keras.backend.cast(rule_preds_onehot > -999, 'float32')
     num_rules = rule_preds_onehot.shape[-1]
     masked_att_proba = att_sigmoid_proba * rule_mask
-    sum_masked_att_proba = tf.keras.backend.sum(masked_att_proba, axis=-1)  
-    uniform_rule_att_proba = (num_rules - sum_masked_att_proba) / num_rules 
+    sum_masked_att_proba = tf.keras.backend.sum(masked_att_proba, axis=-1, keepdims=True) 
+    output = tf.math.multiply(output, sum_masked_att_proba / num_rules) 
+    uniform_rule_att_proba = (num_rules - sum_masked_att_proba) / num_rules
     uniform_pred =  uniform_rule_att_proba*2
     output_with_uniform_rule = output + uniform_pred
     return output_with_uniform_rule
